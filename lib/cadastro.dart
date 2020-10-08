@@ -1,7 +1,4 @@
-import 'dart:wasm';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import "package:flutter/rendering.dart";
@@ -10,9 +7,6 @@ import "dart:ui";
 import "package:flutter/widgets.dart";
 import 'package:flutter_app_tfg_eco/cadastoConcluido.dart';
 import "package:google_fonts/google_fonts.dart";
-import "package:linear_gradient/linear_gradient.dart";
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:masked_text/masked_text.dart';
 
 class CadastroPage extends StatefulWidget {
@@ -21,7 +15,6 @@ class CadastroPage extends StatefulWidget {
 }
 
 class _CadastroPageState extends State<CadastroPage> {
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _dropdownEstado = 'Selecionar';
   String _dropdownSangue = 'Selecionar';
   // ignore: deprecated_member_use

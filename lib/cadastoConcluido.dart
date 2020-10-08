@@ -12,8 +12,6 @@ class CadastroConcluidoPage extends StatefulWidget {
 }
 
 class _CadastroConcluidoPageState extends State<CadastroConcluidoPage> {
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

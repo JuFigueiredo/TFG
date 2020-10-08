@@ -1,16 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app_tfg_eco/Home/home.dart';
 import 'package:flutter_app_tfg_eco/cadastro.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:linear_gradient/linear_gradient.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:masked_text/masked_text.dart';
-
-import 'mainPage.dart';
 
 // Classe que armazena o
 class LoginPage extends StatefulWidget {
@@ -18,63 +14,14 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class UserLogged {
-  String nome;
-  String CEP;
-  String rua;
-  String bairro;
-  String numero;
-  String complemento;
-  String cidade;
-  String estado;
-  String nascimento;
-  String tipo;
-  int peso;
-  int altura;
-  String celularEmer;
-  String nomeEmer;
-
-  UserLogged(
-      {this.nome,
-      this.CEP,
-      this.rua,
-      this.bairro,
-      this.numero,
-      this.complemento,
-      this.cidade,
-      this.estado,
-      this.nascimento,
-      this.tipo,
-      this.peso,
-      this.altura,
-      this.celularEmer,
-      this.nomeEmer});
-}
-
 class _LoginPageState extends State<LoginPage> {
   TextEditingController _phoneController = TextEditingController();
+  // ignore: deprecated_member_use
   final firestoreInstance = Firestore.instance;
-
-  Future<UserLogged> geraConsulta() async {
-    var consulta = await consultaBanco();
-    return consulta;
-  }
-
-  Future<UserLogged> consultaBanco() => Future.delayed(
-      Duration(seconds: 2),
-      () =>
-          firestoreInstance.collection("Usuarios").get().then((querySnapshot) {
-            querySnapshot.docs.forEach((user) {
-              if (user.data().containsValue(_phoneController.text)) {
-                return user;
-              }
-            });
-          }));
 
   @override
   Widget build(BuildContext context) {
     //Size size = MediaQuery.of(context).size;
-    double height = MediaQuery.of(context).size.height;
     return Scaffold(
         resizeToAvoidBottomPadding: false,
         body: LayoutBuilder(
@@ -214,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  MainPage(arguments)),
+                                                  Home(arguments)),
                                         );
                                       } else
                                         print("Usuário não existe");

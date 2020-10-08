@@ -5,7 +5,6 @@ import "dart:ui";
 
 import "package:flutter/widgets.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:linear_gradient/linear_gradient.dart";
 
 class AlterarPage extends StatefulWidget {
   @override
@@ -13,7 +12,6 @@ class AlterarPage extends StatefulWidget {
 }
 
 class _AlterarPageState extends State<AlterarPage> {
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String dropdownEstado = 'Selecionar';
 
   @override
@@ -388,28 +386,31 @@ class _AlterarPageState extends State<AlterarPage> {
                 width: 400.0,
                 padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
                 child: RaisedButton(
-                    color: Color.fromRGBO(44, 187, 101, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    onPressed: () {},
-                    textColor: Colors.white,
-                    padding: EdgeInsets.all(0.0),
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 70.0,
-                      width: 400.0,
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                      ),
-                      child: Text(
-                        "Concluir",
-                        style: GoogleFonts.getFont("Montserrat",
-                          fontSize: 22.0, letterSpacing: 0.5,),
+                  color: Color.fromRGBO(44, 187, 101, 1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  onPressed: () {},
+                  textColor: Colors.white,
+                  padding: EdgeInsets.all(0.0),
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 70.0,
+                    width: 400.0,
+                    decoration: ShapeDecoration(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
                     ),
+                    child: Text(
+                      "Concluir",
+                      style: GoogleFonts.getFont(
+                        "Montserrat",
+                        fontSize: 22.0,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],
