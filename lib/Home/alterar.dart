@@ -1,44 +1,73 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import "package:flutter/rendering.dart";
+import 'package:flutter/services.dart';
 import "dart:ui";
 
 import "package:flutter/widgets.dart";
+import 'package:flutter_app_tfg_eco/Arguments/ScreenArguments.dart';
 import "package:google_fonts/google_fonts.dart";
+import 'package:masked_text/masked_text.dart';
 
 class AlterarPage extends StatefulWidget {
+  ScreenArguments arguments;
+
+  AlterarPage(ScreenArguments arguments) {
+    this.arguments = arguments;
+  }
   @override
-  _AlterarPageState createState() => _AlterarPageState();
+  _AlterarPageState createState() => _AlterarPageState(this.arguments);
 }
 
 class _AlterarPageState extends State<AlterarPage> {
-  String dropdownEstado = 'Selecionar';
+  ScreenArguments user;
+
+  _AlterarPageState(ScreenArguments user) {
+    this.user = user;
+  }
+
+  // ignore: deprecated_member_use
+  final firestoreInstance = Firestore.instance;
+
+  //Itens do cadastro
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _nomeController = TextEditingController();
+  TextEditingController _cepController = TextEditingController();
+  TextEditingController _ruaController = TextEditingController();
+  TextEditingController _bairroController = TextEditingController();
+  TextEditingController _numeroController = TextEditingController();
+  TextEditingController _complementoController = TextEditingController();
+  TextEditingController _cidadeController = TextEditingController();
+  TextEditingController _pesoController = TextEditingController();
+  TextEditingController _alturaController = TextEditingController();
+  TextEditingController _emergencyPhoneController = TextEditingController();
+  TextEditingController _nomeEmergenciaController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    String _dropdownEstado = user.Estado;
     return Scaffold(
       resizeToAvoidBottomPadding: true,
-      appBar: AppBar(
-        title: Text(
-          "Alterar Dados",
-          style: TextStyle(
-            fontFamily: "Cookie",
-            fontSize: 50.0,
-            fontWeight: FontWeight.normal,
-            color: Colors.black,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Color.fromRGBO(127, 181, 190, 1),
-      ),
       backgroundColor: Color.fromRGBO(250, 250, 250, 0.9),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 0.0),
+        padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
         child: Container(
           margin: EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
+              Container(
+                child: Text(
+                  "Alterar Dados",
+                  style: GoogleFonts.getFont("Montserrat",
+                      fontSize: 22.0,
+                      letterSpacing: 0.5,
+                      decoration: TextDecoration.underline,
+                      decorationThickness: 1.3),
+                  textAlign: TextAlign.center,
+                ),
+              ),
               Container(
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
@@ -48,9 +77,14 @@ class _AlterarPageState extends State<AlterarPage> {
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
-              TextFormField(
+              MaskedTextField(
                 keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
+                maxLength: 15,
+                maskedTextFieldController: _phoneController,
+                escapeCharacter: 'x',
+                mask: "(xx) xxxxx-xxxx",
+                inputDecoration: InputDecoration(
+                  counterText: "",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -67,9 +101,14 @@ class _AlterarPageState extends State<AlterarPage> {
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
-              TextFormField(
+              MaskedTextField(
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                mask: "xxxxx-xxx",
+                escapeCharacter: 'x',
+                maskedTextFieldController: _cepController,
+                maxLength: 9,
+                inputDecoration: InputDecoration(
+                  counterText: "",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -87,7 +126,9 @@ class _AlterarPageState extends State<AlterarPage> {
                 ),
               ),
               TextFormField(
+                initialValue: user.Rua,
                 keyboardType: TextInputType.text,
+                controller: _ruaController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -107,6 +148,7 @@ class _AlterarPageState extends State<AlterarPage> {
               ),
               TextFormField(
                 keyboardType: TextInputType.text,
+                controller: _bairroController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -134,6 +176,7 @@ class _AlterarPageState extends State<AlterarPage> {
                           ),
                           TextFormField(
                             keyboardType: TextInputType.number,
+                            controller: _numeroController,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
@@ -162,6 +205,7 @@ class _AlterarPageState extends State<AlterarPage> {
                           ),
                           TextFormField(
                             keyboardType: TextInputType.text,
+                            controller: _complementoController,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
@@ -187,6 +231,7 @@ class _AlterarPageState extends State<AlterarPage> {
               ),
               TextFormField(
                 keyboardType: TextInputType.text,
+                controller: _cidadeController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -218,10 +263,10 @@ class _AlterarPageState extends State<AlterarPage> {
                         padding: EdgeInsets.all(10.0),
                         child: Icon(Icons.keyboard_arrow_down),
                       ),
-                      value: dropdownEstado,
+                      value: _dropdownEstado,
                       onChanged: (String newValue) {
                         setState(() {
-                          dropdownEstado = newValue;
+                          _dropdownEstado = newValue;
                         });
                       },
                       items: <String>[
@@ -288,6 +333,7 @@ class _AlterarPageState extends State<AlterarPage> {
                           ),
                           TextFormField(
                             keyboardType: TextInputType.number,
+                            controller: _pesoController,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
@@ -316,6 +362,7 @@ class _AlterarPageState extends State<AlterarPage> {
                           ),
                           TextFormField(
                             keyboardType: TextInputType.number,
+                            controller: _alturaController,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
@@ -352,9 +399,14 @@ class _AlterarPageState extends State<AlterarPage> {
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
-              TextFormField(
+              MaskedTextField(
                 keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
+                maxLength: 15,
+                maskedTextFieldController: _emergencyPhoneController,
+                escapeCharacter: 'x',
+                mask: "(xx) xxxxx-xxxx",
+                inputDecoration: InputDecoration(
+                  counterText: "",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -373,6 +425,7 @@ class _AlterarPageState extends State<AlterarPage> {
               ),
               TextFormField(
                 keyboardType: TextInputType.name,
+                controller: _nomeEmergenciaController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -384,13 +437,63 @@ class _AlterarPageState extends State<AlterarPage> {
               Container(
                 height: 85.0,
                 width: 400.0,
-                padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+                padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
                 child: RaisedButton(
                   color: Color.fromRGBO(44, 187, 101, 1),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    firestoreInstance
+                        .collection("Usuarios")
+                        .doc(_nomeController.text)
+                        .set({
+                      "Celular": _phoneController.text
+                          .replaceAll("(", "")
+                          .replaceAll(")", "")
+                          .replaceAll("-", "")
+                          .replaceAll(" ", ""),
+                      "CEP": _cepController.text,
+                      "Rua": _ruaController.text,
+                      "Bairro": _bairroController.text,
+                      'Numero': _numeroController.text,
+                      "Complemento": _complementoController.text,
+                      "Cidade": _cidadeController.text,
+                      'Estado': _dropdownEstado,
+                      'Peso': _pesoController.text,
+                      'Altura': _alturaController.text,
+                      'Celular Emergencia': _emergencyPhoneController.text
+                          .replaceAll("(", "")
+                          .replaceAll(")", "")
+                          .replaceAll("-", "")
+                          .replaceAll(" ", ""),
+                      'Nome Emergencia': _nomeEmergenciaController.text
+                    });
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        content: Row(
+                          children: [
+                            Icon(
+                              Icons.thumb_up,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 20),
+                            Expanded(
+                              child: Text(
+                                "Alteração realizada com sucesso!",
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                   textColor: Colors.white,
                   padding: EdgeInsets.all(0.0),
                   child: Container(
