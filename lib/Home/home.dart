@@ -1,3 +1,4 @@
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_tfg_eco/Arguments/ScreenArguments.dart';
@@ -8,6 +9,7 @@ import 'homeTab.dart';
 // ignore: must_be_immutable
 class Home extends StatelessWidget {
   ScreenArguments arguments;
+  List<charts.Series> l = [];
 
   Home(ScreenArguments arguments) {
     this.arguments = arguments;
@@ -59,7 +61,7 @@ class Home extends StatelessWidget {
           body: TabBarView(
             children: [
               HomeTab(arguments),
-              Icon(Icons.directions_transit),
+              Text("oi"), //GraphHome(l),
               AlterarPage(arguments),
             ],
           ),

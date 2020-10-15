@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_tfg_eco/Arguments/ScreenArguments.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 // ignore: must_be_immutable
 class HomeTab extends StatefulWidget {
@@ -122,7 +123,7 @@ class _HomeTabState extends State<HomeTab> {
                         children: [
                           Container(
                             padding: EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-                            child: Icon(Icons.invert_colors),
+                            child: Icon(FlutterIcons.water_mco),
                           ),
                           Container(
                             padding: EdgeInsets.all(10.0),
@@ -154,7 +155,7 @@ class _HomeTabState extends State<HomeTab> {
                                   Container(
                                     padding:
                                         EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-                                    child: Icon(Icons.iso_outlined),
+                                    child: Icon(FlutterIcons.weight_mco),
                                   ),
                                   Container(
                                     padding: EdgeInsets.all(10.0),
@@ -182,10 +183,9 @@ class _HomeTabState extends State<HomeTab> {
                               Row(
                                 children: [
                                   Container(
-                                    padding:
-                                        EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-                                    child: Icon(Icons.straighten),
-                                  ),
+                                      padding: EdgeInsets.fromLTRB(
+                                          5.0, 0.0, 0.0, 0.0),
+                                      child: Icon(FlutterIcons.ruler_ent)),
                                   Container(
                                     padding: EdgeInsets.all(10.0),
                                     child: Text(

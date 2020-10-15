@@ -10,6 +10,7 @@ import 'package:flutter_app_tfg_eco/Arguments/ScreenArguments.dart';
 import "package:google_fonts/google_fonts.dart";
 import 'package:masked_text/masked_text.dart';
 
+// ignore: must_be_immutable
 class AlterarPage extends StatefulWidget {
   ScreenArguments arguments;
 
