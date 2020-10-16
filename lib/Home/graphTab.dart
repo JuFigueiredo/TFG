@@ -1,44 +1,32 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:charts_flutter/flutter.dart' as charts;
+
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_app_tfg_eco/grafico.dart';
 
-Future<Post> getSVMData() async {
-  var response = await http
-      .get(Uri.encodeFull("http://127.0.0.1:8000/get-svm/2"), headers: {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-  });
+import 'home.dart';
 
-  if (response.statusCode == 200) {
-    return Post.fromJson(json.decode(response.body));
-  } else {
-    throw Exception('Falha ao carregar um post');
-  }
-}
-
-class Post {
-  final int personID;
-  final List<int> data;
-
-  Post({this.personID, this.data});
-
-  factory Post.fromJson(Map<String, dynamic> json) {
-    return Post(
-      personID: json['personID'],
-      data: json['data'],
-    );
-  }
-}
-
+// ignore: must_be_immutable
 class GraphTab extends StatefulWidget {
+  String nome = "";
+  Future<Post> post;
+
+  GraphTab(String nome, Future<Post> post) {
+    this.nome = nome;
+    this.post = post;
+  }
   @override
-  _GraphTabState createState() => _GraphTabState();
+  _GraphTabState createState() => _GraphTabState(this.nome, this.post);
 }
 
 class _GraphTabState extends State<GraphTab> {
-  final Future<Post> post = getSVMData();
+  String nome;
+  Future<Post> post;
+
+  _GraphTabState(String nome, Future<Post> post) {
+    this.nome = nome;
+    this.post = post;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,12 +36,11 @@ class _GraphTabState extends State<GraphTab> {
           // ignore: missing_return
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              SimpleLineChart svm =
+                  new SimpleLineChart.withData(snapshot.data.data, nome, 'SVM');
               return Padding(
                 padding: EdgeInsets.all(10.0),
-                child: Text("id:" +
-                    snapshot.data.personID.toString() +
-                    '\n\n data:' +
-                    snapshot.data.data.toString()),
+                child: svm,
               );
             } else {
               if (snapshot.hasError) {

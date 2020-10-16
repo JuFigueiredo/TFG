@@ -1,16 +1,44 @@
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_app_tfg_eco/Arguments/ScreenArguments.dart';
 import 'package:flutter_app_tfg_eco/Home/alterar.dart';
-
+import 'package:flutter_app_tfg_eco/Home/graphTab.dart';
+import 'dart:convert';
 import 'homeTab.dart';
+
+Future<Post> getSVMData() async {
+  var response = await http
+      .get(Uri.encodeFull("http://10.0.2.2:8000/get-svm/2"), headers: {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+  });
+
+  if (response.statusCode == 200) {
+    return Post.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Falha ao carregar um post');
+  }
+}
+
+class Post {
+  final String personID;
+  final List<dynamic> data;
+
+  Post({this.personID, this.data});
+
+  factory Post.fromJson(Map<String, dynamic> json) {
+    return Post(
+      personID: json['personID'],
+      data: json['data'],
+    );
+  }
+}
 
 // ignore: must_be_immutable
 class Home extends StatelessWidget {
   ScreenArguments arguments;
-  List<charts.Series> l = [];
-
+  final Future<Post> post = getSVMData();
   Home(ScreenArguments arguments) {
     this.arguments = arguments;
   }
@@ -61,7 +89,7 @@ class Home extends StatelessWidget {
           body: TabBarView(
             children: [
               HomeTab(arguments),
-              Text("oi"), //GraphHome(l),
+              GraphTab(arguments.Nome, post),
               AlterarPage(arguments),
             ],
           ),
