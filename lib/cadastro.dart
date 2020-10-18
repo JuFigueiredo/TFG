@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import "package:flutter/rendering.dart";
+import 'package:flutter/services.dart';
 import "dart:ui";
 
 import "package:flutter/widgets.dart";
 import 'package:flutter_app_tfg_eco/cadastoConcluido.dart';
 import "package:google_fonts/google_fonts.dart";
+import 'package:intl/intl.dart';
 import 'package:masked_text/masked_text.dart';
 
 class CadastroPage extends StatefulWidget {
@@ -17,6 +20,8 @@ class CadastroPage extends StatefulWidget {
 class _CadastroPageState extends State<CadastroPage> {
   String _dropdownEstado = 'Selecionar';
   String _dropdownSangue = 'Selecionar';
+  DateTime selectedDate = DateTime.now();
+  final format = DateFormat("yyyy-MM-dd");
   // ignore: deprecated_member_use
   final firestoreInstance = Firestore.instance;
 
@@ -335,17 +340,33 @@ class _CadastroPageState extends State<CadastroPage> {
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
-              MaskedTextField(
-                keyboardType: TextInputType.datetime,
-                mask: "xx/xx/xxxx",
-                maxLength: 10,
-                maskedTextFieldController: _nascimentoController,
-                inputDecoration: InputDecoration(
-                  counterText: "",
+              DateTimeField(
+                format: format,
+                controller: _nascimentoController,
+                decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
+                initialValue: selectedDate,
+                onShowPicker: (context, currentValue) {
+                  return showDatePicker(
+                      context: context,
+                      firstDate: DateTime(1900),
+                      initialDate: selectedDate,
+                      lastDate: DateTime(2100));
+                },
+
+                // keyboardType: TextInputType.datetime,
+                // mask: "xx/xx/xxxx",
+                // maxLength: 10,
+                // maskedTextFieldController: _nascimentoController,
+                // inputDecoration: InputDecoration(
+                //   counterText: "",
+                //   border: OutlineInputBorder(
+                //     borderRadius: BorderRadius.circular(10.0),
+                //   ),
+                // ),
               ),
               Container(
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),

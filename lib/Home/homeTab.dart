@@ -22,6 +22,7 @@ class _HomeTabState extends State<HomeTab> {
   }
   @override
   Widget build(BuildContext context) {
+    print(user.Data_de_nascimento);
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(
