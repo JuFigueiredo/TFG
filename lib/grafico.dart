@@ -22,11 +22,16 @@ class SimpleLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new charts.LineChart(
+    return new charts.NumericComboChart(
       seriesList,
       animate: animate,
       defaultRenderer:
           new charts.LineRendererConfig(includeArea: true, stacked: true),
+      customSeriesRenderers: [
+        new charts.PointRendererConfig(
+            // ID used to link series to this renderer.
+            customRendererId: 'customPoint')
+      ],
       primaryMeasureAxis: new charts.NumericAxisSpec(
         tickProviderSpec: new charts.BasicNumericTickProviderSpec(
             // Make sure we don't have values less than 1 as ticks
@@ -45,6 +50,7 @@ class SimpleLineChart extends StatelessWidget {
         //     labelAnchor: charts.TickLabelAnchor.before, )
       ),
       behaviors: [
+        new charts.SeriesLegend(),
         new charts.ChartTitle('Posição em relação ao tempo usando uma SVM',
             titleStyleSpec: charts.TextStyleSpec(
               fontFamily: 'Montserrat',
@@ -70,27 +76,40 @@ class SimpleLineChart extends StatelessWidget {
   static List<charts.Series<Dado, double>> _formatData(List<dynamic> data) {
     double time = -2.56;
     List<Dado> array = new List<Dado>();
+    List<Dado> quedas = new List<Dado>();
     int last = -1;
-    bool queda = false;
 
     data.forEach((element) {
       time += 2.56;
       if (last == 5 && element == 6) {
-        queda = true;
+        Dado queda = new Dado(time, element);
+        quedas.add(queda);
+        print("Posicao queda {${queda.posicao}}");
+        print("Tempo queda {${queda.tempo}}");
       }
       last = element;
-      array.add(new Dado(time, element));
+      Dado pos = new Dado(time, element);
+      array.add(pos);
     });
+
+    // Dado test = new Dado(2, 6);
+    // print("Posicao {${test.posicao}}");
+    // print("Tempo {${test.tempo}}");
 
     return [
       new charts.Series<Dado, double>(
-        id: "SVM",
-        colorFn: (Dado data, __) => queda == true
-            ? charts.MaterialPalette.red.shadeDefault
-            : charts.MaterialPalette.blue.shadeDefault,
+        id: "Posição em relação ao tempo",
+        colorFn: (Dado data, __) => charts.MaterialPalette.blue.shadeDefault,
         domainFn: (Dado data, _) => data.tempo,
         measureFn: (Dado data, _) => data.posicao,
         data: array,
+      ),
+      new charts.Series<Dado, double>(
+        id: "Ocorrência de queda",
+        colorFn: (Dado data, __) => charts.MaterialPalette.red.shadeDefault,
+        domainFn: (Dado data, _) => data.tempo,
+        measureFn: (Dado data, _) => data.posicao - 6,
+        data: quedas,
       )
     ];
   }

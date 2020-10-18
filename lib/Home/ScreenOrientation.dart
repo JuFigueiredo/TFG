@@ -22,30 +22,34 @@ mixin PortraitModeMixin on StatelessWidget {
 /// Call `super.build(context)` in the State's build() method
 /// and `super.dispose();` in the State's dispose() method
 mixin PortraitStatefulModeMixin<T extends StatefulWidget> on State<T> {
-  @override
-  Widget build(BuildContext context) {
+  Widget buildLandscape(BuildContext context) {
     _landscapeModeOnly();
     return null;
   }
 
   @override
+  Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+    return null;
+  }
+
+  @override
   void dispose() {
-    _enableRotation();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    super.dispose();
   }
 }
 
 /// blocks rotation; sets orientation to: portrait
 void _landscapeModeOnly() {
   SystemChrome.setPreferredOrientations([
-    DeviceOrientation.landscapeLeft,
-    DeviceOrientation.landscapeRight,
-  ]);
-}
-
-void _enableRotation() {
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]);

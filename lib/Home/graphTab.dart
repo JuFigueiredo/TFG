@@ -32,7 +32,7 @@ class _GraphTabState extends State<GraphTab>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    super.buildLandscape(context);
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: FutureBuilder<Post>(
