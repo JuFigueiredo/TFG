@@ -32,14 +32,15 @@ class _HomeTabState extends State<HomeTab> {
         children: <Widget>[
           Container(
             padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
-            height: 200,
-            width: 380,
+            height: 240,
+            width: MediaQuery.of(context).size.width * 0.9,
             child: Card(
               color: Color.fromRGBO(250, 250, 250, 0.8),
               elevation: 5,
               borderOnForeground: true,
               shadowColor: Colors.black,
               child: Container(
+                alignment: Alignment.center,
                 padding: EdgeInsets.all(5.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -55,24 +56,31 @@ class _HomeTabState extends State<HomeTab> {
                               Row(
                                 children: [
                                   Container(
+                                    height: 80,
                                     padding:
                                         EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
                                     child: Icon(Icons.person),
                                   ),
                                   Container(
                                     padding: EdgeInsets.all(10.0),
-                                    child: Text(
-                                      user.Nome,
-                                      style: TextStyle(
-                                        shadows: [
-                                          Shadow(
-                                              color: Colors.black,
-                                              blurRadius: 0.7)
-                                        ],
-                                        fontFamily: 'Montserrat',
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.45,
+                                    alignment: Alignment.centerLeft,
+                                    child: Flexible(
+                                      child: Text(
+                                        user.Nome,
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          shadows: [
+                                            Shadow(
+                                                color: Colors.black,
+                                                blurRadius: 0.7)
+                                          ],
+                                          fontFamily: 'Montserrat',
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.black,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -86,25 +94,30 @@ class _HomeTabState extends State<HomeTab> {
                                   padding: EdgeInsets.all(10.0),
                                   child: Row(
                                     children: [
-                                      Text(
-                                        (DateTime.now()
-                                                        .difference(
-                                                            DateTime.parse(user
-                                                                .Data_de_nascimento))
-                                                        .inDays ~/
-                                                    365)
-                                                .toString() +
-                                            ' anos',
-                                        style: TextStyle(
-                                          shadows: [
-                                            Shadow(
-                                                color: Colors.black,
-                                                blurRadius: 0.7)
-                                          ],
-                                          fontFamily: 'Montserrat',
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.black,
+                                      Container(
+                                        alignment: Alignment.centerRight,
+                                        child: Flexible(
+                                          child: Text(
+                                            (DateTime.now()
+                                                            .difference(DateTime
+                                                                .parse(user
+                                                                    .Data_de_nascimento))
+                                                            .inDays ~/
+                                                        365)
+                                                    .toString() +
+                                                ' anos',
+                                            style: TextStyle(
+                                              shadows: [
+                                                Shadow(
+                                                    color: Colors.black,
+                                                    blurRadius: 0.7)
+                                              ],
+                                              fontFamily: 'Montserrat',
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.normal,
+                                              color: Colors.black,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ],

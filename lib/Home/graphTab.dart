@@ -59,10 +59,22 @@ class _GraphTabState extends State<GraphTab>
             );
           } else {
             if (snapshot.hasError) {
-              return Text("${snapshot.error}");
+              return Container(
+                padding: EdgeInsets.all(10.0),
+                alignment: Alignment.center,
+                child: Text(
+                  "${snapshot.error}",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 30.0),
+                ),
+              );
             }
-            return Center(
-              child: CircularProgressIndicator(),
+            return Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(10.0),
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
             );
           }
         },

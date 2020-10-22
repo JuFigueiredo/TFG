@@ -442,8 +442,10 @@ class _CadastroPageState extends State<CadastroPage> {
                           ),
                           TextFormField(
                             keyboardType: TextInputType.number,
+                            maxLength: 3,
                             controller: _pesoController,
                             decoration: InputDecoration(
+                              counterText: "",
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
@@ -470,9 +472,11 @@ class _CadastroPageState extends State<CadastroPage> {
                             ),
                           ),
                           TextFormField(
+                            maxLength: 3,
                             keyboardType: TextInputType.number,
                             controller: _alturaController,
                             decoration: InputDecoration(
+                              counterText: "",
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),

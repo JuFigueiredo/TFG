@@ -60,14 +60,6 @@ class SimpleLineChart extends StatelessWidget {
             behaviorPosition: charts.BehaviorPosition.top,
             titleOutsideJustification: charts.OutsideJustification.start,
             innerPadding: 18),
-        // new charts.ChartTitle('Bottom title text',
-        //     behaviorPosition: charts.BehaviorPosition.bottom,
-        //     titleOutsideJustification:
-        //         charts.OutsideJustification.middleDrawArea),
-        // new charts.ChartTitle('Start title',
-        //     behaviorPosition: charts.BehaviorPosition.start,
-        //     titleOutsideJustification:
-        //         charts.OutsideJustification.middleDrawArea),
       ],
     );
   }
@@ -84,8 +76,6 @@ class SimpleLineChart extends StatelessWidget {
       if (last == 5 && element == 6) {
         Dado queda = new Dado(time, element);
         quedas.add(queda);
-        print("Posicao queda {${queda.posicao}}");
-        print("Tempo queda {${queda.tempo}}");
       }
       last = element;
       Dado pos = new Dado(time, element);
