@@ -30,216 +30,156 @@ class _HomeTabState extends State<HomeTab> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
-            height: 240,
-            width: MediaQuery.of(context).size.width * 0.9,
+          Padding(
+            padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 10.0),
             child: Card(
               color: Color.fromRGBO(250, 250, 250, 0.8),
               elevation: 5,
               borderOnForeground: true,
               shadowColor: Colors.black,
               child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(5.0),
+                padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
+                height: 240,
+                width: MediaQuery.of(context).size.width * 0.9,
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 80,
-                                    padding:
-                                        EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-                                    child: Icon(Icons.person),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.all(10.0),
-                                    width: MediaQuery.of(context).size.width *
-                                        0.45,
-                                    alignment: Alignment.centerLeft,
-                                    child: Flexible(
-                                      child: Text(
-                                        user.Nome,
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                          shadows: [
-                                            Shadow(
-                                                color: Colors.black,
-                                                blurRadius: 0.7)
-                                          ],
-                                          fontFamily: 'Montserrat',
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                  textBaseline: TextBaseline.alphabetic,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  verticalDirection: VerticalDirection.down,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10.0, 10.0, 20.0, 10.0),
+                          child: Icon(Icons.person),
+                        ),
+                        Flexible(
+                          child: Text(
+                            "Juliana Figueiredo de Andrade",
+                            // user.Nome,
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              shadows: [
+                                Shadow(color: Colors.black, blurRadius: 0.7)
+                              ],
+                              fontFamily: 'Montserrat',
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                            ),
                           ),
-                          Column(
-                            children: [
-                              Container(
-                                  padding: EdgeInsets.all(10.0),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        alignment: Alignment.centerRight,
-                                        child: Flexible(
-                                          child: Text(
-                                            (DateTime.now()
-                                                            .difference(DateTime
-                                                                .parse(user
-                                                                    .Data_de_nascimento))
-                                                            .inDays ~/
-                                                        365)
-                                                    .toString() +
-                                                ' anos',
-                                            style: TextStyle(
-                                              shadows: [
-                                                Shadow(
-                                                    color: Colors.black,
-                                                    blurRadius: 0.7)
-                                              ],
-                                              fontFamily: 'Montserrat',
-                                              fontSize: 18.0,
-                                              fontWeight: FontWeight.normal,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ))
-                            ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(30.0, 10.0, 20.0, 10.0),
+                          child: Text(
+                            (DateTime.now()
+                                            .difference(DateTime.parse(
+                                                user.Data_de_nascimento))
+                                            .inDays ~/
+                                        365)
+                                    .toString() +
+                                ' anos',
+                            style: TextStyle(
+                              shadows: [
+                                Shadow(color: Colors.black, blurRadius: 0.7)
+                              ],
+                              fontFamily: 'Montserrat',
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     Divider(
                       color: Colors.black26,
                       thickness: 1.2,
                     ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 10.0),
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-                            child: Icon(FlutterIcons.water_mco),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10.0, 10.0, 20.0, 5.0),
+                          child: Icon(FlutterIcons.water_mco),
+                        ),
+                        Text(
+                          "Tipo sanguíneo : ${user.Tipo}",
+                          style: TextStyle(
+                            shadows: [
+                              Shadow(color: Colors.black, blurRadius: 0.7)
+                            ],
+                            fontFamily: 'Montserrat',
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
                           ),
-                          Container(
-                            padding: EdgeInsets.all(10.0),
-                            child: Text(
-                              "Tipo sanguíneo : ${user.Tipo}",
-                              style: TextStyle(
-                                shadows: [
-                                  Shadow(color: Colors.black, blurRadius: 0.7)
-                                ],
-                                fontFamily: 'Montserrat',
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.black,
-                              ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10.0, 5.0, 20.0, 10.0),
+                          child: Icon(FlutterIcons.weight_mco),
+                        ),
+                        Text(
+                          "Peso: ${user.Peso}kg",
+                          style: TextStyle(
+                            shadows: [
+                              Shadow(color: Colors.black, blurRadius: 0.7)
+                            ],
+                            fontFamily: 'Montserrat',
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Spacer(),
+                        Icon(FlutterIcons.ruler_ent),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10.0),
+                          child: Text(
+                            "Altura: ${user.Altura} cm",
+                            style: TextStyle(
+                              shadows: [
+                                Shadow(color: Colors.black, blurRadius: 0.7)
+                              ],
+                              fontFamily: 'Montserrat',
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    padding:
-                                        EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-                                    child: Icon(FlutterIcons.weight_mco),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.all(10.0),
-                                    child: Text(
-                                      "Peso: ${user.Peso}kg",
-                                      style: TextStyle(
-                                        shadows: [
-                                          Shadow(
-                                              color: Colors.black,
-                                              blurRadius: 0.7)
-                                        ],
-                                        fontFamily: 'Montserrat',
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                      padding: EdgeInsets.fromLTRB(
-                                          5.0, 0.0, 0.0, 0.0),
-                                      child: Icon(FlutterIcons.ruler_ent)),
-                                  Container(
-                                    padding: EdgeInsets.all(10.0),
-                                    child: Text(
-                                      "Altura: ${user.Altura} cm", //"user.Nome",
-                                      style: TextStyle(
-                                        shadows: [
-                                          Shadow(
-                                              color: Colors.black,
-                                              blurRadius: 0.7)
-                                        ],
-                                        fontFamily: 'Montserrat',
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
-            height: 160,
-            width: 380,
+          Padding(
+            padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 20.0),
             child: Card(
               color: Color.fromRGBO(250, 250, 250, 0.8),
               elevation: 5,
               borderOnForeground: true,
               shadowColor: Colors.black,
               child: Container(
-                padding: EdgeInsets.all(5.0),
+                padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
+                height: 150,
+                width: MediaQuery.of(context).size.width * 0.9,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[

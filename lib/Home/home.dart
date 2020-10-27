@@ -9,7 +9,7 @@ import 'homeTab.dart';
 
 Future<Post> getSVMData() async {
   var response = await http
-      .get(Uri.encodeFull("http://10.0.2.2:8000/get-svm/9"), headers: {
+      .get(Uri.encodeFull("http://192.168.0.115:8000/get-svm/9"), headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",
   });
@@ -74,7 +74,7 @@ class Home extends StatelessWidget {
               ],
             ),
             title: Text(
-              "Veio's Fall",
+              "Elderly",
               style: TextStyle(
                   fontFamily: "Cookie",
                   fontSize: 45.0,
