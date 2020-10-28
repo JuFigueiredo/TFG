@@ -98,7 +98,7 @@ class SimpleLineChart extends StatelessWidget {
         id: "Ocorrência de queda",
         colorFn: (Dado data, __) => charts.MaterialPalette.red.shadeDefault,
         domainFn: (Dado data, _) => data.tempo,
-        measureFn: (Dado data, _) => data.posicao - 6,
+        measureFn: (Dado data, _) => data.posicao,
         data: quedas,
       )
     ];
