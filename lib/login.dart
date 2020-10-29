@@ -77,6 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   Container(
+                    width: 400.0,
                     padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 30.0),
                     child: MaskedTextField(
                       keyboardType: TextInputType.phone,

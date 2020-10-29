@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 class SimpleLineChart extends StatelessWidget {
   final List<charts.Series> seriesList;
   final bool animate;
-  String nome;
-  String ia;
 
   SimpleLineChart(this.seriesList, {this.animate});
 
@@ -16,7 +14,7 @@ class SimpleLineChart extends StatelessWidget {
     return new SimpleLineChart(
       _formatData(data),
       // Disable animations for image tests.
-      animate: true,
+      animate: false,
     );
   }
 
@@ -25,12 +23,15 @@ class SimpleLineChart extends StatelessWidget {
     return new charts.NumericComboChart(
       seriesList,
       animate: animate,
-      defaultRenderer:
-          new charts.LineRendererConfig(includeArea: true, stacked: true),
+      defaultRenderer: new charts.LineRendererConfig(
+        includeArea: true,
+        stacked: true,
+      ),
       customSeriesRenderers: [
         new charts.PointRendererConfig(
-            // ID used to link series to this renderer.
-            customRendererId: 'customPoint')
+          // ID used to link series to this renderer.
+          customRendererId: 'customPoint',
+        )
       ],
       primaryMeasureAxis: new charts.NumericAxisSpec(
         tickProviderSpec: new charts.BasicNumericTickProviderSpec(
@@ -50,16 +51,7 @@ class SimpleLineChart extends StatelessWidget {
         //     labelAnchor: charts.TickLabelAnchor.before, )
       ),
       behaviors: [
-        new charts.SeriesLegend(),
-        new charts.ChartTitle('Posição em relação ao tempo usando uma SVM',
-            titleStyleSpec: charts.TextStyleSpec(
-              fontFamily: 'Montserrat',
-              color: charts.MaterialPalette.black,
-              fontSize: 15,
-            ),
-            behaviorPosition: charts.BehaviorPosition.top,
-            titleOutsideJustification: charts.OutsideJustification.start,
-            innerPadding: 18),
+        new charts.SeriesLegend(horizontalFirst: true),
       ],
     );
   }
@@ -96,9 +88,10 @@ class SimpleLineChart extends StatelessWidget {
       ),
       new charts.Series<Dado, double>(
         id: "Ocorrência de queda",
-        colorFn: (Dado data, __) => charts.MaterialPalette.red.shadeDefault,
+        colorFn: (Dado data, __) =>
+            charts.MaterialPalette.red.shadeDefault.darker,
         domainFn: (Dado data, _) => data.tempo,
-        measureFn: (Dado data, _) => data.posicao,
+        measureFn: (Dado data, _) => data.posicao - 6,
         data: quedas,
       )
     ];

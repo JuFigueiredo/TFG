@@ -1,37 +1,48 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter_app_tfg_eco/Home/rnaGraph.dart';
+
+import 'home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_tfg_eco/Arguments/ScreenArguments.dart';
+import 'package:flutter_app_tfg_eco/Home/svmGraph.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 // ignore: must_be_immutable
 class HomeTab extends StatefulWidget {
   ScreenArguments arguments;
+  Future<Post> svm;
+  Future<Post> rna;
 
-  HomeTab(ScreenArguments arguments) {
+  HomeTab(ScreenArguments arguments, Future<Post> svm, Future<Post> rna) {
     this.arguments = arguments;
+    this.rna = rna;
+    this.svm = svm;
   }
   @override
-  _HomeTabState createState() => _HomeTabState(this.arguments);
+  _HomeTabState createState() =>
+      _HomeTabState(this.arguments, this.svm, this.rna);
 }
 
 class _HomeTabState extends State<HomeTab> {
   ScreenArguments user;
+  Future<Post> svm;
+  Future<Post> rna;
 
-  _HomeTabState(ScreenArguments user) {
+  _HomeTabState(ScreenArguments user, Future<Post> svm, Future<Post> rna) {
     this.user = user;
+    this.rna = rna;
+    this.svm = svm;
   }
   @override
   Widget build(BuildContext context) {
-    print(user.Data_de_nascimento);
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 10.0),
+            padding: EdgeInsets.fromLTRB(10.0, 40.0, 10.0, 10.0),
             child: Card(
               color: Color.fromRGBO(250, 250, 250, 0.8),
               elevation: 5,
@@ -59,8 +70,7 @@ class _HomeTabState extends State<HomeTab> {
                         ),
                         Flexible(
                           child: Text(
-                            "Juliana Figueiredo de Andrade",
-                            // user.Nome,
+                            user.Nome,
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               shadows: [
@@ -272,6 +282,92 @@ class _HomeTabState extends State<HomeTab> {
                   ],
                 ),
               ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 20.0),
+            child: RaisedButton(
+              color: Color.fromRGBO(142, 110, 83, 1),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              textColor: Colors.white,
+              padding: EdgeInsets.all(0.0),
+              child: Container(
+                alignment: Alignment.center,
+                height: 80.0,
+                width: MediaQuery.of(context).size.width * 0.9,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: <Color>[
+                      Color.fromRGBO(142, 110, 83, 0.9),
+                      Colors.white54,
+                      Color.fromRGBO(142, 110, 83, 0.9),
+                    ],
+                  ),
+                ),
+                child: Text(
+                  "Gerar gráfico SVM",
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: 25.0,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              onPressed: () => {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => SvmGraph(svm)))
+              },
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 20.0),
+            child: RaisedButton(
+              color: Color.fromRGBO(179, 153, 162, 1),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              textColor: Colors.white,
+              padding: EdgeInsets.all(0.0),
+              child: Container(
+                alignment: Alignment.center,
+                height: 80.0,
+                width: MediaQuery.of(context).size.width * 0.9,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: <Color>[
+                      Color.fromRGBO(179, 153, 162, 0.8),
+                      Colors.white54,
+                      Color.fromRGBO(179, 153, 162, 0.8),
+                    ],
+                  ),
+                ),
+                child: Text(
+                  "Gerar gráfico RNA",
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: 25.0,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              onPressed: () => {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => RnaGraph(rna)))
+              },
             ),
           ),
         ],

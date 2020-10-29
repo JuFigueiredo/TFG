@@ -33,7 +33,7 @@ class _AlterarPageState extends State<AlterarPage> {
 
   //Itens do cadastro
   TextEditingController _phoneController = TextEditingController();
-  TextEditingController _nomeController = TextEditingController();
+  //TextEditingController _nomeController = TextEditingController();
   TextEditingController _cepController = TextEditingController();
   TextEditingController _ruaController = TextEditingController();
   TextEditingController _bairroController = TextEditingController();
@@ -445,33 +445,34 @@ class _AlterarPageState extends State<AlterarPage> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   onPressed: () {
-                    firestoreInstance
-                        .collection("Usuarios")
-                        .doc(_nomeController.text)
-                        .set({
-                      "Celular": _phoneController.text
-                          .replaceAll("(", "")
-                          .replaceAll(")", "")
-                          .replaceAll("-", "")
-                          .replaceAll(" ", ""),
-                      "CEP": _cepController.text,
-                      "Rua": _ruaController.text,
-                      "Bairro": _bairroController.text,
-                      'Numero': _numeroController.text,
-                      "Complemento": _complementoController.text,
-                      "Cidade": _cidadeController.text,
-                      'Estado': _dropdownEstado,
-                      'Peso': _pesoController.text,
-                      'Altura': _alturaController.text,
-                      'Celular Emergencia': _emergencyPhoneController.text
-                          .replaceAll("(", "")
-                          .replaceAll(")", "")
-                          .replaceAll("-", "")
-                          .replaceAll(" ", ""),
-                      'Nome Emergencia': _nomeEmergenciaController.text
-                    });
+                    // firestoreInstance
+                    //     .collection("Usuarios")
+                    //     .doc(_nomeController.text)
+                    //     .set({
+                    //   "Celular": _phoneController.text
+                    //       .replaceAll("(", "")
+                    //       .replaceAll(")", "")
+                    //       .replaceAll("-", "")
+                    //       .replaceAll(" ", ""),
+                    //   "CEP": _cepController.text,
+                    //   "Rua": _ruaController.text,
+                    //   "Bairro": _bairroController.text,
+                    //   'Numero': _numeroController.text,
+                    //   "Complemento": _complementoController.text,
+                    //   "Cidade": _cidadeController.text,
+                    //   'Estado': _dropdownEstado,
+                    //   'Peso': _pesoController.text,
+                    //   'Altura': _alturaController.text,
+                    //   'Celular Emergencia': _emergencyPhoneController.text
+                    //       .replaceAll("(", "")
+                    //       .replaceAll(")", "")
+                    //       .replaceAll("-", "")
+                    //       .replaceAll(" ", ""),
+                    //   'Nome Emergencia': _nomeEmergenciaController.text
+                    // });
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
+                        duration: Duration(seconds: 1),
                         content: Row(
                           children: [
                             Icon(
@@ -484,7 +485,7 @@ class _AlterarPageState extends State<AlterarPage> {
                                 "Alteração realizada com sucesso!",
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
-                                  fontSize: 20.0,
+                                  fontSize: 18.0,
                                   fontWeight: FontWeight.normal,
                                   color: Colors.white,
                                 ),
