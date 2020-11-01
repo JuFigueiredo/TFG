@@ -54,7 +54,6 @@ class _HomeTabState extends State<HomeTab> {
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: Column(
                   textBaseline: TextBaseline.alphabetic,
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   verticalDirection: VerticalDirection.down,
                   children: [
@@ -201,7 +200,6 @@ class _HomeTabState extends State<HomeTab> {
                           Container(
                               padding: EdgeInsets.all(10.0),
                               child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.baseline,
                                 children: [
                                   Container(
                                     padding:

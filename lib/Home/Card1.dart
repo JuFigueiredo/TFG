@@ -21,14 +21,12 @@ class _Card1State extends State<Card1> {
         shadowColor: Colors.black,
         child: Column(
           textBaseline: TextBaseline.alphabetic,
-          crossAxisAlignment: CrossAxisAlignment.baseline,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           verticalDirection: VerticalDirection.down,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               textBaseline: TextBaseline.alphabetic,
-              crossAxisAlignment: CrossAxisAlignment.baseline,
               verticalDirection: VerticalDirection.down,
               children: [
                 Icon(Icons.person),

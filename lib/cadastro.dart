@@ -24,6 +24,7 @@ class _CadastroPageState extends State<CadastroPage> {
   final format = DateFormat("yyyy-MM-dd");
   // ignore: deprecated_member_use
   final firestoreInstance = Firestore.instance;
+  String id = "";
 
   //Itens do cadastro
   TextEditingController _phoneController = TextEditingController();
@@ -561,7 +562,11 @@ class _CadastroPageState extends State<CadastroPage> {
                     //Registra o matuto no BD
                     firestoreInstance
                         .collection("Usuarios")
-                        .doc(_nomeController.text)
+                        .doc(_phoneController.text
+                            .replaceAll("(", "")
+                            .replaceAll(")", "")
+                            .replaceAll("-", "")
+                            .replaceAll(" ", ""))
                         .set({
                       "Celular": _phoneController.text
                           .replaceAll("(", "")

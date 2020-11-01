@@ -84,6 +84,11 @@ class _AlterarPageState extends State<AlterarPage> {
                 maskedTextFieldController: _phoneController,
                 escapeCharacter: 'x',
                 mask: "(xx) xxxxx-xxxx",
+                onChange: (String newValue) {
+                  setState(() {
+                    _phoneController.text = newValue;
+                  });
+                },
                 inputDecoration: InputDecoration(
                   counterText: "",
                   border: OutlineInputBorder(
@@ -445,31 +450,92 @@ class _AlterarPageState extends State<AlterarPage> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   onPressed: () {
-                    // firestoreInstance
-                    //     .collection("Usuarios")
-                    //     .doc(_nomeController.text)
-                    //     .set({
-                    //   "Celular": _phoneController.text
-                    //       .replaceAll("(", "")
-                    //       .replaceAll(")", "")
-                    //       .replaceAll("-", "")
-                    //       .replaceAll(" ", ""),
-                    //   "CEP": _cepController.text,
-                    //   "Rua": _ruaController.text,
-                    //   "Bairro": _bairroController.text,
-                    //   'Numero': _numeroController.text,
-                    //   "Complemento": _complementoController.text,
-                    //   "Cidade": _cidadeController.text,
-                    //   'Estado': _dropdownEstado,
-                    //   'Peso': _pesoController.text,
-                    //   'Altura': _alturaController.text,
-                    //   'Celular Emergencia': _emergencyPhoneController.text
-                    //       .replaceAll("(", "")
-                    //       .replaceAll(")", "")
-                    //       .replaceAll("-", "")
-                    //       .replaceAll(" ", ""),
-                    //   'Nome Emergencia': _nomeEmergenciaController.text
-                    // });
+                    firestoreInstance
+                        .collection("Usuarios")
+                        .doc(user.Numero.replaceAll("(", "")
+                            .replaceAll(")", "")
+                            .replaceAll("-", "")
+                            .replaceAll(" ", ""))
+                        .update({
+                      "Celular": _phoneController.text
+                                      .replaceAll("(", "")
+                                      .replaceAll(")", "")
+                                      .replaceAll("-", "")
+                                      .replaceAll(" ", "") ==
+                                  null ||
+                              _phoneController.text
+                                      .replaceAll("(", "")
+                                      .replaceAll(")", "")
+                                      .replaceAll("-", "")
+                                      .replaceAll(" ", "") ==
+                                  ""
+                          ? user.Numero
+                          : _phoneController.text
+                              .replaceAll("(", "")
+                              .replaceAll(")", "")
+                              .replaceAll("-", "")
+                              .replaceAll(" ", ""),
+                      "CEP": _cepController.text == null ||
+                              _cepController.text == ""
+                          ? user.CEP
+                          : _cepController.text,
+                      "Rua": _ruaController.text == null ||
+                              _ruaController.text == ""
+                          ? user.Rua
+                          : _ruaController.text,
+                      "Bairro": _bairroController.text == null ||
+                              _bairroController.text == ""
+                          ? user.Message
+                          : _bairroController.text,
+                      'Numero': _numeroController.text == null ||
+                              _numeroController.text == ""
+                          ? user.Numero
+                          : _numeroController.text,
+                      "Complemento": _complementoController.text == null ||
+                              _complementoController.text == ""
+                          ? user.Complemento
+                          : _complementoController.text,
+                      "Cidade": _cidadeController.text == null ||
+                              _cidadeController.text == ""
+                          ? user.Cidade
+                          : _cidadeController.text,
+                      'Estado': _dropdownEstado == null ||
+                              _dropdownEstado == "Selecione"
+                          ? user.Estado
+                          : _dropdownEstado,
+                      'Peso': _pesoController.text == null ||
+                              _pesoController.text == ""
+                          ? user.Peso
+                          : _pesoController.text,
+                      'Altura': _alturaController.text == null ||
+                              _alturaController.text == ""
+                          ? user.Altura
+                          : _alturaController.text,
+                      'Celular Emergencia': _emergencyPhoneController.text
+                                      .replaceAll("(", "")
+                                      .replaceAll(")", "")
+                                      .replaceAll("-", "")
+                                      .replaceAll(" ", "") ==
+                                  null ||
+                              _emergencyPhoneController.text
+                                      .replaceAll("(", "")
+                                      .replaceAll(")", "")
+                                      .replaceAll("-", "")
+                                      .replaceAll(" ", "") ==
+                                  ""
+                          ? user.Celular_Emergencia
+                          : _emergencyPhoneController.text
+                              .replaceAll("(", "")
+                              .replaceAll(")", "")
+                              .replaceAll("-", "")
+                              .replaceAll(" ", ""),
+                      'Nome Emergencia':
+                          _nomeEmergenciaController.text == null ||
+                                  _nomeEmergenciaController.text == ""
+                              ? user.Nome_Emergencia
+                              : _nomeEmergenciaController.text,
+                    });
+                    // ignore: deprecated_member_use
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
                         duration: Duration(seconds: 1),
