@@ -9,7 +9,7 @@ import 'homeTab.dart';
 
 Future<Post> getSVMData() async {
   var response = await http
-      .get(Uri.encodeFull("http://192.168.15.76:8000/get-svm/18"), headers: {
+      .get(Uri.encodeFull("http://192.168.0.152:8000/get-svm/18"), headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",
   });
@@ -23,7 +23,7 @@ Future<Post> getSVMData() async {
 
 Future<Post> getRNAData() async {
   var response = await http
-      .get(Uri.encodeFull("http://192.168.15.76:8000/get-rna/18"), headers: {
+      .get(Uri.encodeFull("http://192.168.0.152:8000/get-rna/18"), headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",
   });

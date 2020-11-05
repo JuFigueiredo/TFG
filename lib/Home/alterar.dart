@@ -48,6 +48,7 @@ class _AlterarPageState extends State<AlterarPage> {
   @override
   Widget build(BuildContext context) {
     String _dropdownEstado = user.Estado;
+    print("Cel: " + user.Numero);
     return Scaffold(
       resizeToAvoidBottomPadding: true,
       backgroundColor: Color.fromRGBO(250, 250, 250, 0.9),
@@ -84,11 +85,6 @@ class _AlterarPageState extends State<AlterarPage> {
                 maskedTextFieldController: _phoneController,
                 escapeCharacter: 'x',
                 mask: "(xx) xxxxx-xxxx",
-                onChange: (String newValue) {
-                  setState(() {
-                    _phoneController.text = newValue;
-                  });
-                },
                 inputDecoration: InputDecoration(
                   counterText: "",
                   border: OutlineInputBorder(
@@ -452,7 +448,7 @@ class _AlterarPageState extends State<AlterarPage> {
                   onPressed: () {
                     firestoreInstance
                         .collection("Usuarios")
-                        .doc(user.Numero.replaceAll("(", "")
+                        .doc(user.Celular.replaceAll("(", "")
                             .replaceAll(")", "")
                             .replaceAll("-", "")
                             .replaceAll(" ", ""))
@@ -469,7 +465,7 @@ class _AlterarPageState extends State<AlterarPage> {
                                       .replaceAll("-", "")
                                       .replaceAll(" ", "") ==
                                   ""
-                          ? user.Numero
+                          ? user.Celular
                           : _phoneController.text
                               .replaceAll("(", "")
                               .replaceAll(")", "")
