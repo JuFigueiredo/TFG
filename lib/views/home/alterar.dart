@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import "package:flutter/rendering.dart";
-import 'package:flutter/services.dart';
 import "dart:ui";
 
 import "package:flutter/widgets.dart";
@@ -10,30 +9,19 @@ import 'package:flutter_app_tfg_eco/Arguments/ScreenArguments.dart';
 import "package:google_fonts/google_fonts.dart";
 import 'package:masked_text/masked_text.dart';
 
+import 'home.dart';
+
 // ignore: must_be_immutable
 class AlterarPage extends StatefulWidget {
-  ScreenArguments arguments;
-
-  AlterarPage(ScreenArguments arguments) {
-    this.arguments = arguments;
-  }
   @override
-  _AlterarPageState createState() => _AlterarPageState(this.arguments);
+  _AlterarPageState createState() => _AlterarPageState();
 }
 
 class _AlterarPageState extends State<AlterarPage> {
-  ScreenArguments user;
-
-  _AlterarPageState(ScreenArguments user) {
-    this.user = user;
-  }
-
   // ignore: deprecated_member_use
   final firestoreInstance = Firestore.instance;
 
   //Itens do cadastro
-  TextEditingController _phoneController = TextEditingController();
-  //TextEditingController _nomeController = TextEditingController();
   TextEditingController _cepController = TextEditingController();
   TextEditingController _ruaController = TextEditingController();
   TextEditingController _bairroController = TextEditingController();
@@ -72,30 +60,6 @@ class _AlterarPageState extends State<AlterarPage> {
               ),
               Container(
                 alignment: Alignment.topLeft,
-                padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
-                child: Text(
-                  "Celular:",
-                  style: GoogleFonts.getFont("Montserrat",
-                      fontSize: 18.0, letterSpacing: 0.5),
-                ),
-              ),
-              MaskedTextField(
-                keyboardType: TextInputType.phone,
-                maxLength: 15,
-                maskedTextFieldController: _phoneController,
-                escapeCharacter: 'x',
-                mask: "(xx) xxxxx-xxxx",
-                inputDecoration: InputDecoration(
-                  counterText: "",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  labelStyle: GoogleFonts.getFont("Montserrat",
-                      fontSize: 15.0, letterSpacing: 0.5),
-                ),
-              ),
-              Container(
-                alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 child: Text(
                   "CEP:",
@@ -128,7 +92,6 @@ class _AlterarPageState extends State<AlterarPage> {
                 ),
               ),
               TextFormField(
-                initialValue: user.Rua,
                 keyboardType: TextInputType.text,
                 controller: _ruaController,
                 decoration: InputDecoration(
@@ -267,9 +230,7 @@ class _AlterarPageState extends State<AlterarPage> {
                       ),
                       value: _dropdownEstado,
                       onChanged: (String newValue) {
-                        setState(() {
-                          _dropdownEstado = newValue;
-                        });
+                        _dropdownEstado = newValue;
                       },
                       items: <String>[
                         'Selecionar',
@@ -445,32 +406,14 @@ class _AlterarPageState extends State<AlterarPage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  onPressed: () {
-                    firestoreInstance
+                  onPressed: () async {
+                    await firestoreInstance
                         .collection("Usuarios")
                         .doc(user.Celular.replaceAll("(", "")
                             .replaceAll(")", "")
                             .replaceAll("-", "")
                             .replaceAll(" ", ""))
                         .update({
-                      "Celular": _phoneController.text
-                                      .replaceAll("(", "")
-                                      .replaceAll(")", "")
-                                      .replaceAll("-", "")
-                                      .replaceAll(" ", "") ==
-                                  null ||
-                              _phoneController.text
-                                      .replaceAll("(", "")
-                                      .replaceAll(")", "")
-                                      .replaceAll("-", "")
-                                      .replaceAll(" ", "") ==
-                                  ""
-                          ? user.Celular
-                          : _phoneController.text
-                              .replaceAll("(", "")
-                              .replaceAll(")", "")
-                              .replaceAll("-", "")
-                              .replaceAll(" ", ""),
                       "CEP": _cepController.text == null ||
                               _cepController.text == ""
                           ? user.CEP
@@ -495,10 +438,7 @@ class _AlterarPageState extends State<AlterarPage> {
                               _cidadeController.text == ""
                           ? user.Cidade
                           : _cidadeController.text,
-                      'Estado': _dropdownEstado == null ||
-                              _dropdownEstado == "Selecione"
-                          ? user.Estado
-                          : _dropdownEstado,
+                      'Estado': _dropdownEstado,
                       'Peso': _pesoController.text == null ||
                               _pesoController.text == ""
                           ? user.Peso
@@ -531,6 +471,34 @@ class _AlterarPageState extends State<AlterarPage> {
                               ? user.Nome_Emergencia
                               : _nomeEmergenciaController.text,
                     });
+
+                    await firestoreInstance
+                        .collection("Usuarios")
+                        .where("Celular",
+                            isEqualTo: user.Celular.replaceAll("(", "")
+                                .replaceAll(")", "")
+                                .replaceAll("-", "")
+                                .replaceAll(" ", ""))
+                        .get()
+                        .then((querySnapshot) {
+                      user = new ScreenArguments(
+                          querySnapshot.docs.first.data()["Altura"],
+                          querySnapshot.docs.first.data()["Bairro"],
+                          querySnapshot.docs.first.data()["CEP"],
+                          querySnapshot.docs.first.data()["Celular"],
+                          querySnapshot.docs.first.data()["Celular Emergencia"],
+                          querySnapshot.docs.first.data()["Cidade"],
+                          querySnapshot.docs.first.data()["Complemento"],
+                          querySnapshot.docs.first.data()["Data de nascimento"],
+                          querySnapshot.docs.first.data()["Estado"],
+                          querySnapshot.docs.first.data()["Nome"],
+                          querySnapshot.docs.first.data()["Nome Emergencia"],
+                          querySnapshot.docs.first.data()["Numero"],
+                          querySnapshot.docs.first.data()["Peso"],
+                          querySnapshot.docs.first.data()["Rua"],
+                          querySnapshot.docs.first.data()["Tipo"]);
+                    }).catchError((error) => print(error));
+
                     // ignore: deprecated_member_use
                     Scaffold.of(context).showSnackBar(
                       SnackBar(

@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import "dart:ui";
 
 import "package:flutter/widgets.dart";
-import 'package:flutter_app_tfg_eco/cadastoConcluido.dart';
+import 'package:flutter_app_tfg_eco/views/register/cadastoConcluido.dart';
 import "package:google_fonts/google_fonts.dart";
 import 'package:intl/intl.dart';
 import 'package:masked_text/masked_text.dart';
@@ -595,7 +595,8 @@ class _CadastroPageState extends State<CadastroPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => CadastroConcluidoPage()));
+                            builder: (context) =>
+                                CadastroConcluidoPage(_phoneController.text)));
                   },
                   textColor: Colors.white,
                   padding: EdgeInsets.all(0.0),

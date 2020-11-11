@@ -1,17 +1,35 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import "package:flutter/rendering.dart";
 import "dart:ui";
 import "package:flutter/widgets.dart";
-import 'package:flutter_app_tfg_eco/login.dart';
+import 'package:flutter_app_tfg_eco/Arguments/ScreenArguments.dart';
+import 'package:flutter_app_tfg_eco/controller/user_controller.dart';
+import 'package:flutter_app_tfg_eco/views/home/home.dart';
 import "package:google_fonts/google_fonts.dart";
 
+// ignore: must_be_immutable
 class CadastroConcluidoPage extends StatefulWidget {
+  String phone;
+
+  CadastroConcluidoPage(String phone) {
+    this.phone = phone;
+  }
   @override
-  _CadastroConcluidoPageState createState() => _CadastroConcluidoPageState();
+  _CadastroConcluidoPageState createState() =>
+      _CadastroConcluidoPageState(this.phone);
 }
 
 class _CadastroConcluidoPageState extends State<CadastroConcluidoPage> {
+  String phone;
+  UserController uc = UserController();
+  _CadastroConcluidoPageState(String phone) {
+    this.phone = phone;
+  }
+
+  final firestoreInstance = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,16 +96,48 @@ class _CadastroConcluidoPageState extends State<CadastroConcluidoPage> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 color: Color.fromRGBO(44, 187, 101, 1),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginPage()));
+                onPressed: () async {
+                  await firestoreInstance
+                      .collection("Usuarios")
+                      .where("Celular",
+                          isEqualTo: phone
+                              .replaceAll("(", "")
+                              .replaceAll(")", "")
+                              .replaceAll("-", "")
+                              .replaceAll(" ", ""))
+                      .get()
+                      .then((querySnapshot) {
+                    if (querySnapshot.size > 0) {
+                      ScreenArguments arguments = new ScreenArguments(
+                          querySnapshot.docs.first.data()["Altura"],
+                          querySnapshot.docs.first.data()["Message"],
+                          querySnapshot.docs.first.data()["CEP"],
+                          querySnapshot.docs.first.data()["Celular"],
+                          querySnapshot.docs.first.data()["Celular Emergencia"],
+                          querySnapshot.docs.first.data()["Cidade"],
+                          querySnapshot.docs.first.data()["Complemento"],
+                          querySnapshot.docs.first.data()["Data de nascimento"],
+                          querySnapshot.docs.first.data()["Estado"],
+                          querySnapshot.docs.first.data()["Nome"],
+                          querySnapshot.docs.first.data()["Nome Emergencia"],
+                          querySnapshot.docs.first.data()["Numero"],
+                          querySnapshot.docs.first.data()["Peso"],
+                          querySnapshot.docs.first.data()["Rua;"],
+                          querySnapshot.docs.first.data()["Tipo"]);
+                      uc.setUser(arguments);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Home(uc.user)),
+                      );
+                    }
+                  }).catchError((error) => print(error));
                 },
                 icon: Icon(
                   Icons.arrow_back_ios,
                   color: Colors.white,
                 ),
                 label: Text(
-                  "Voltar para login",
+                  "Entrar",
                   style: GoogleFonts.getFont(
                     "Montserrat",
                     fontSize: 22.0,

@@ -1,37 +1,32 @@
-import 'package:flutter_app_tfg_eco/Home/rnaGraph.dart';
+import 'package:flutter_app_tfg_eco/views/home/home.dart';
+import 'package:flutter_app_tfg_eco/views/home/rnaGraph.dart';
+import 'package:flutter_app_tfg_eco/views/home/svmGraph.dart';
 
-import 'home.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_tfg_eco/Arguments/ScreenArguments.dart';
-import 'package:flutter_app_tfg_eco/Home/svmGraph.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 // ignore: must_be_immutable
 class HomeTab extends StatefulWidget {
-  ScreenArguments arguments;
   Future<Post> svm;
   Future<Post> rna;
 
-  HomeTab(ScreenArguments arguments, Future<Post> svm, Future<Post> rna) {
-    this.arguments = arguments;
+  HomeTab(Future<Post> svm, Future<Post> rna) {
     this.rna = rna;
     this.svm = svm;
   }
   @override
-  _HomeTabState createState() =>
-      _HomeTabState(this.arguments, this.svm, this.rna);
+  _HomeTabState createState() => _HomeTabState(this.svm, this.rna);
 }
 
 class _HomeTabState extends State<HomeTab> {
-  ScreenArguments user;
   Future<Post> svm;
   Future<Post> rna;
 
-  _HomeTabState(ScreenArguments user, Future<Post> svm, Future<Post> rna) {
-    this.user = user;
+  _HomeTabState(Future<Post> svm, Future<Post> rna) {
     this.rna = rna;
     this.svm = svm;
   }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -285,13 +280,14 @@ class _HomeTabState extends State<HomeTab> {
           Padding(
             padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 20.0),
             child: RaisedButton(
-              color: Color.fromRGBO(142, 110, 83, 1),
+              color: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
               textColor: Colors.white,
               padding: EdgeInsets.all(0.0),
               child: Container(
+                padding: EdgeInsets.all(20.0),
                 alignment: Alignment.center,
                 height: 80.0,
                 width: MediaQuery.of(context).size.width * 0.9,
@@ -303,20 +299,34 @@ class _HomeTabState extends State<HomeTab> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: <Color>[
-                      Color.fromRGBO(142, 110, 83, 0.9),
-                      Colors.white54,
-                      Color.fromRGBO(142, 110, 83, 0.9),
+                      Color.fromRGBO(246, 126, 125, 1),
+                      Color.fromRGBO(246, 126, 125, 0.9),
+                      Color.fromRGBO(246, 126, 125, 1),
                     ],
                   ),
                 ),
-                child: Text(
-                  "Gerar gráfico SVM",
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontSize: 25.0,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.black,
-                  ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      AntDesign.barchart,
+                      color: Colors.black,
+                      size: 32,
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      "Gráfico SVM",
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               onPressed: () => {
@@ -328,7 +338,7 @@ class _HomeTabState extends State<HomeTab> {
           Padding(
             padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 20.0),
             child: RaisedButton(
-              color: Color.fromRGBO(179, 153, 162, 1),
+              color: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
@@ -346,20 +356,34 @@ class _HomeTabState extends State<HomeTab> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: <Color>[
-                      Color.fromRGBO(179, 153, 162, 0.8),
-                      Colors.white54,
-                      Color.fromRGBO(179, 153, 162, 0.8),
+                      Color.fromRGBO(245, 162, 93, 1),
+                      Color.fromRGBO(245, 162, 93, 0.8),
+                      Color.fromRGBO(245, 162, 93, 1),
                     ],
                   ),
                 ),
-                child: Text(
-                  "Gerar gráfico RNA",
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontSize: 25.0,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.black,
-                  ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      AntDesign.barchart,
+                      color: Colors.black,
+                      size: 32,
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      "Gráfico RNA",
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               onPressed: () => {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_app_tfg_eco/loadingApp.dart';
-import 'package:flutter_app_tfg_eco/login.dart';
+import 'package:flutter_app_tfg_eco/views/login/loadingApp.dart';
+import 'package:flutter_app_tfg_eco/views/login/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 

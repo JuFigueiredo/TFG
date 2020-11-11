@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_app_tfg_eco/Home/home.dart';
-import 'package:flutter_app_tfg_eco/cadastro.dart';
+import 'package:flutter_app_tfg_eco/controller/user_controller.dart';
+import 'package:flutter_app_tfg_eco/views/home/home.dart';
+import 'package:flutter_app_tfg_eco/views/register/cadastro.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_app_tfg_eco/Arguments/ScreenArguments.dart';
@@ -15,6 +16,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  UserController uc = UserController();
   TextEditingController _phoneController = TextEditingController();
   // ignore: deprecated_member_use
   final firestoreInstance = Firestore.instance;
@@ -108,9 +110,9 @@ class _LoginPageState extends State<LoginPage> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
-                            onPressed: () {
+                            onPressed: () async {
                               // Checar numero no banco de dados
-                              firestoreInstance
+                              await firestoreInstance
                                   .collection("Usuarios")
                                   .where("Celular",
                                       isEqualTo: _phoneController.text
@@ -126,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                                           querySnapshot.docs.first
                                               .data()["Altura"],
                                           querySnapshot.docs.first
-                                              .data()["Message"],
+                                              .data()["Bairro"],
                                           querySnapshot.docs.first
                                               .data()["CEP"],
                                           querySnapshot.docs.first
@@ -150,16 +152,21 @@ class _LoginPageState extends State<LoginPage> {
                                           querySnapshot.docs.first
                                               .data()["Peso"],
                                           querySnapshot.docs.first
-                                              .data()["Rua;"],
+                                              .data()["Rua"],
                                           querySnapshot.docs.first
                                               .data()["Tipo"]);
+                                  uc.setUser(arguments);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Home(arguments)),
+                                        builder: (context) => Home(uc.user)),
                                   );
                                 } else
-                                  print("Usuário não existe");
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              CadastroPage()));
                               }).catchError((error) => print(error));
                             },
                             textColor: Colors.white,

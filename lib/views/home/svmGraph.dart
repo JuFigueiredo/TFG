@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app_tfg_eco/grafico.dart';
+import 'package:flutter_app_tfg_eco/models/grafico.dart';
 import 'home.dart';
 
-import 'package:flutter_app_tfg_eco/Home/ScreenOrientation.dart';
+import 'package:flutter_app_tfg_eco/models/ScreenOrientation.dart';
 
 // ignore: must_be_immutable
 class SvmGraph extends StatefulWidget {

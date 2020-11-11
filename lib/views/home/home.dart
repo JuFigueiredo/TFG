@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_tfg_eco/login.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_app_tfg_eco/Arguments/ScreenArguments.dart';
-import 'package:flutter_app_tfg_eco/Home/alterar.dart';
+import 'package:flutter_app_tfg_eco/controller/user_controller.dart';
+import 'package:flutter_app_tfg_eco/views/login/login.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_app_tfg_eco/views/home/alterar.dart';
 import 'dart:convert';
 import 'homeTab.dart';
 
@@ -49,14 +51,17 @@ class Post {
   }
 }
 
+ScreenArguments user;
+
 // ignore: must_be_immutable
 class Home extends StatelessWidget {
-  ScreenArguments arguments;
   final Future<Post> svm = getSVMData();
   final Future<Post> rna = getRNAData();
-  Home(ScreenArguments arguments) {
-    this.arguments = arguments;
+
+  Home(ScreenArguments u) {
+    user = u;
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -115,8 +120,8 @@ class Home extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              HomeTab(arguments, svm, rna),
-              AlterarPage(arguments),
+              HomeTab(svm, rna),
+              AlterarPage(),
             ],
           ),
         ),
