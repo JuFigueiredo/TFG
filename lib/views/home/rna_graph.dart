@@ -1,20 +1,23 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app_tfg_eco/models/grafico.dart';
-import 'home.dart';
 
-import 'package:flutter_app_tfg_eco/models/ScreenOrientation.dart';
+import '../../models/graph_model.dart';
+import '../../screen_orientation.dart';
+import 'home_page.dart';
 
+/// Cria o Grafico de RNA
 // ignore: must_be_immutable
 class RnaGraph extends StatefulWidget {
+  /// Dados da RNA
   Future<Post> rna;
 
+  /// Construtor
   RnaGraph(Future<Post> rna) : super() {
-    this.rna = rna;
+    rna = rna;
   }
   @override
-  _RnaGraphState createState() => _RnaGraphState(this.rna);
+  _RnaGraphState createState() => _RnaGraphState(rna);
 }
 
 class _RnaGraphState extends State<RnaGraph>
@@ -22,7 +25,7 @@ class _RnaGraphState extends State<RnaGraph>
   Future<Post> rna;
 
   _RnaGraphState(Future<Post> rna) {
-    this.rna = rna;
+    rna = rna;
   }
 
   @override
@@ -34,9 +37,9 @@ class _RnaGraphState extends State<RnaGraph>
         title: Padding(
           padding: EdgeInsets.all(10.0),
           child: Text(
-            "Elderly",
+            'Elderly',
             style: TextStyle(
-                fontFamily: "Cookie",
+                fontFamily: 'Cookie',
                 fontSize: 45.0,
                 fontWeight: FontWeight.normal,
                 color: Colors.black,
@@ -58,7 +61,8 @@ class _RnaGraphState extends State<RnaGraph>
               Padding(
                 padding: EdgeInsets.only(top: 30.0, bottom: 10.0),
                 child: Text(
-                  "Previsão dos movimentos a partir de uma Rede Neural Artificial (RNA)",
+                  'Previsão dos movimentos a partir'
+                  'de uma Rede Neural Artificial (RNA)',
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     shadows: [Shadow(color: Colors.black, blurRadius: 0.7)],
@@ -73,8 +77,7 @@ class _RnaGraphState extends State<RnaGraph>
                 future: rna,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    SimpleLineChart rna =
-                        new SimpleLineChart.withData(snapshot.data.data);
+                    var rna = SimpleLineChart.withData(snapshot.data.data);
                     return Container(
                       padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
                       height: 350,
@@ -96,7 +99,7 @@ class _RnaGraphState extends State<RnaGraph>
                         padding: EdgeInsets.all(10.0),
                         alignment: Alignment.center,
                         child: Text(
-                          "${snapshot.error}",
+                          '${snapshot.error}',
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 30.0),
                         ),

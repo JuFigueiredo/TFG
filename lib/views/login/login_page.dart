@@ -1,15 +1,17 @@
-import 'package:flutter/material.dart';
 import 'dart:ui';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_app_tfg_eco/controller/user_controller.dart';
-import 'package:flutter_app_tfg_eco/views/home/home.dart';
-import 'package:flutter_app_tfg_eco/views/register/cadastro.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_app_tfg_eco/Arguments/ScreenArguments.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:masked_text/masked_text.dart';
 
-// Classe que armazena o
+import '../../controller/user_controller.dart';
+import '../../models/user_model.dart';
+import '../home/home_page.dart';
+import '../register/register_page.dart';
+
+/// Página de Login
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -17,7 +19,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   UserController uc = UserController();
-  TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   // ignore: deprecated_member_use
   final firestoreInstance = Firestore.instance;
 
@@ -37,14 +39,14 @@ class _LoginPageState extends State<LoginPage> {
               decoration: BoxDecoration(
                   image: DecorationImage(
                 image: AssetImage(
-                  "assets/images/wallpaperOld.jpeg",
+                  'assets/images/wallpaperOld.jpeg',
                 ),
                 fit: BoxFit.cover,
               )),
             ),
             Opacity(
               child: Image.asset(
-                "assets/images/bgwhite.jpg",
+                'assets/images/bgwhite.jpg',
                 fit: BoxFit.cover,
                 // width: size.width,
                 //height: size.height,
@@ -113,61 +115,54 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () async {
                               // Checar numero no banco de dados
                               await firestoreInstance
-                                  .collection("Usuarios")
-                                  .where("Celular",
+                                  .collection('users')
+                                  .where('phoneNumber',
                                       isEqualTo: _phoneController.text
-                                          .replaceAll("(", "")
-                                          .replaceAll(")", "")
-                                          .replaceAll("-", "")
-                                          .replaceAll(" ", ""))
+                                          .replaceAll('(', '')
+                                          .replaceAll(')', '')
+                                          .replaceAll('-', '')
+                                          .replaceAll(' ', ''))
                                   .get()
                                   .then((querySnapshot) {
                                 if (querySnapshot.size > 0) {
-                                  ScreenArguments arguments =
-                                      new ScreenArguments(
-                                          querySnapshot.docs.first
-                                              .data()["Altura"],
-                                          querySnapshot.docs.first
-                                              .data()["Bairro"],
-                                          querySnapshot.docs.first
-                                              .data()["CEP"],
-                                          querySnapshot.docs.first
-                                              .data()["Celular"],
-                                          querySnapshot.docs.first
-                                              .data()["Celular Emergencia"],
-                                          querySnapshot.docs.first
-                                              .data()["Cidade"],
-                                          querySnapshot.docs.first
-                                              .data()["Complemento"],
-                                          querySnapshot.docs.first
-                                              .data()["Data de nascimento"],
-                                          querySnapshot.docs.first
-                                              .data()["Estado"],
-                                          querySnapshot.docs.first
-                                              .data()["Nome"],
-                                          querySnapshot.docs.first
-                                              .data()["Nome Emergencia"],
-                                          querySnapshot.docs.first
-                                              .data()["Numero"],
-                                          querySnapshot.docs.first
-                                              .data()["Peso"],
-                                          querySnapshot.docs.first
-                                              .data()["Rua"],
-                                          querySnapshot.docs.first
-                                              .data()["Tipo"]);
+                                  var arguments = UserModel(
+                                      querySnapshot.docs.first.data()['height'],
+                                      querySnapshot.docs.first
+                                          .data()['district'],
+                                      querySnapshot.docs.first.data()['cep'],
+                                      querySnapshot.docs.first
+                                          .data()['phoneNumber'],
+                                      querySnapshot.docs.first
+                                          .data()['sosPhoneNumber'],
+                                      querySnapshot.docs.first.data()['city'],
+                                      querySnapshot.docs.first
+                                          .data()['additionalAddress'],
+                                      querySnapshot.docs.first
+                                          .data()['birthDate'],
+                                      querySnapshot.docs.first.data()['state'],
+                                      querySnapshot.docs.first.data()['name'],
+                                      querySnapshot.docs.first
+                                          .data()['sosName'],
+                                      querySnapshot.docs.first.data()['number'],
+                                      querySnapshot.docs.first.data()['weigth'],
+                                      querySnapshot.docs.first.data()['street'],
+                                      querySnapshot.docs.first
+                                          .data()['bloodType']);
                                   uc.setUser(arguments);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Home(uc.user)),
+                                        builder: (context) =>
+                                            HomePage(uc.user)),
                                   );
-                                } else
+                                } else {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              CadastroPage()));
-                              }).catchError((error) => print(error));
+                                              RegisterPage()));
+                                }
+                              }).catchError(print);
                             },
                             textColor: Colors.white,
                             padding: EdgeInsets.all(0.0),
@@ -212,12 +207,12 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () {
                               //Código de se cadastrar
                               // Direcionar para a página de cadastro
-                              _phoneController.text = "";
+                              _phoneController.text = '';
 
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => CadastroPage()),
+                                    builder: (context) => RegisterPage()),
                               );
                             },
                             textColor: Colors.black,

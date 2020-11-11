@@ -1,34 +1,40 @@
-import 'package:flutter_app_tfg_eco/views/home/home.dart';
-import 'package:flutter_app_tfg_eco/views/home/rnaGraph.dart';
-import 'package:flutter_app_tfg_eco/views/home/svmGraph.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
+import 'home_page.dart';
+import 'rna_graph.dart';
+import 'svm_graph.dart';
+
+/// Tab da Tela Principal
 // ignore: must_be_immutable
-class HomeTab extends StatefulWidget {
+class HomePageTab extends StatefulWidget {
+  /// SVM
   Future<Post> svm;
+
+  /// RNA
   Future<Post> rna;
 
-  HomeTab(Future<Post> svm, Future<Post> rna) {
-    this.rna = rna;
-    this.svm = svm;
+  /// Construtor
+  HomePageTab(Future<Post> svm, Future<Post> rna) {
+    rna = rna;
+    svm = svm;
   }
   @override
-  _HomeTabState createState() => _HomeTabState(this.svm, this.rna);
+  _HomePageTabState createState() => _HomePageTabState(svm, rna);
 }
 
-class _HomeTabState extends State<HomeTab> {
+class _HomePageTabState extends State<HomePageTab> {
   Future<Post> svm;
   Future<Post> rna;
 
-  _HomeTabState(Future<Post> svm, Future<Post> rna) {
-    this.rna = rna;
-    this.svm = svm;
+  _HomePageTabState(Future<Post> svm, Future<Post> rna) {
+    rna = rna;
+    svm = svm;
   }
 
   @override
   Widget build(BuildContext context) {
+    var difference = DateTime.now().difference(DateTime.parse(user.birthDate));
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(
@@ -64,7 +70,7 @@ class _HomeTabState extends State<HomeTab> {
                         ),
                         Flexible(
                           child: Text(
-                            user.Nome,
+                            user.name,
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               shadows: [
@@ -80,13 +86,7 @@ class _HomeTabState extends State<HomeTab> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(30.0, 10.0, 20.0, 10.0),
                           child: Text(
-                            (DateTime.now()
-                                            .difference(DateTime.parse(
-                                                user.Data_de_nascimento))
-                                            .inDays ~/
-                                        365)
-                                    .toString() +
-                                ' anos',
+                            '${difference.inDays ~/ 365} anos',
                             style: TextStyle(
                               shadows: [
                                 Shadow(color: Colors.black, blurRadius: 0.7)
@@ -114,7 +114,7 @@ class _HomeTabState extends State<HomeTab> {
                           child: Icon(FlutterIcons.water_mco),
                         ),
                         Text(
-                          "Tipo sanguíneo : ${user.Tipo}",
+                          'Tipo sanguíneo : ${user.bloodType}',
                           style: TextStyle(
                             shadows: [
                               Shadow(color: Colors.black, blurRadius: 0.7)
@@ -138,7 +138,7 @@ class _HomeTabState extends State<HomeTab> {
                           child: Icon(FlutterIcons.weight_mco),
                         ),
                         Text(
-                          "Peso: ${user.Peso}kg",
+                          'Peso: ${user.weigth}kg',
                           style: TextStyle(
                             shadows: [
                               Shadow(color: Colors.black, blurRadius: 0.7)
@@ -154,7 +154,7 @@ class _HomeTabState extends State<HomeTab> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10.0),
                           child: Text(
-                            "Altura: ${user.Altura} cm",
+                            'Altura: ${user.height} cm',
                             style: TextStyle(
                               shadows: [
                                 Shadow(color: Colors.black, blurRadius: 0.7)
@@ -200,7 +200,7 @@ class _HomeTabState extends State<HomeTab> {
                                     padding:
                                         EdgeInsets.fromLTRB(0.0, 0, 3.0, 0),
                                     child: Text(
-                                      "0",
+                                      '0',
                                       style: TextStyle(
                                         shadows: [
                                           Shadow(
@@ -217,7 +217,7 @@ class _HomeTabState extends State<HomeTab> {
                                   Container(
                                     padding: EdgeInsets.fromLTRB(3.0, 0, 0, 0),
                                     child: Text(
-                                      "passos",
+                                      'passos',
                                       style: TextStyle(
                                         shadows: [
                                           Shadow(
@@ -257,7 +257,7 @@ class _HomeTabState extends State<HomeTab> {
                           Container(
                             padding: EdgeInsets.fromLTRB(20.0, 0, 10.0, 0.0),
                             child: Text(
-                              "Ainda faltam 5000 passos para o objetivo diário", //"user.Nome",
+                              'Ainda faltam 5000 passos para o objetivo diário',
                               style: TextStyle(
                                 shadows: [
                                   Shadow(color: Colors.black, blurRadius: 0.7)
@@ -318,7 +318,7 @@ class _HomeTabState extends State<HomeTab> {
                       width: 20,
                     ),
                     Text(
-                      "Gráfico SVM",
+                      'Gráfico SVM',
                       style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontSize: 25.0,
@@ -375,7 +375,7 @@ class _HomeTabState extends State<HomeTab> {
                       width: 20,
                     ),
                     Text(
-                      "Gráfico RNA",
+                      'Gráfico RNA',
                       style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontSize: 25.0,

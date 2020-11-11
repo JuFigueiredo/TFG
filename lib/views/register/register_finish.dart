@@ -1,31 +1,35 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import "package:flutter/material.dart";
-import "package:flutter/rendering.dart";
-import "dart:ui";
-import "package:flutter/widgets.dart";
-import 'package:flutter_app_tfg_eco/Arguments/ScreenArguments.dart';
-import 'package:flutter_app_tfg_eco/controller/user_controller.dart';
-import 'package:flutter_app_tfg_eco/views/home/home.dart';
-import "package:google_fonts/google_fonts.dart";
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
+import '../../controller/user_controller.dart';
+import '../../models/user_model.dart';
+import '../home/home_page.dart';
+
+/// Tela que mostra que o cadastro foi concluído
 // ignore: must_be_immutable
-class CadastroConcluidoPage extends StatefulWidget {
+class RegisterFinish extends StatefulWidget {
+  /// ID do banco
   String phone;
 
-  CadastroConcluidoPage(String phone) {
-    this.phone = phone;
+  /// Construtor
+  RegisterFinish(String phone) {
+    phone = phone;
   }
   @override
-  _CadastroConcluidoPageState createState() =>
-      _CadastroConcluidoPageState(this.phone);
+  _RegisterFinishState createState() => _RegisterFinishState(phone);
 }
 
-class _CadastroConcluidoPageState extends State<CadastroConcluidoPage> {
+class _RegisterFinishState extends State<RegisterFinish> {
   String phone;
   UserController uc = UserController();
-  _CadastroConcluidoPageState(String phone) {
-    this.phone = phone;
+  _RegisterFinishState(String phone) {
+    phone = phone;
   }
 
   final firestoreInstance = FirebaseFirestore.instance;
@@ -73,7 +77,7 @@ class _CadastroConcluidoPageState extends State<CadastroConcluidoPage> {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
                     child: Text(
-                      "Cadastro concluído!",
+                      'Cadastro concluído!',
                       style: TextStyle(
                         fontFamily: 'Cookie',
                         fontSize: 50.0,
@@ -98,48 +102,49 @@ class _CadastroConcluidoPageState extends State<CadastroConcluidoPage> {
                 color: Color.fromRGBO(44, 187, 101, 1),
                 onPressed: () async {
                   await firestoreInstance
-                      .collection("Usuarios")
-                      .where("Celular",
+                      .collection('users')
+                      .where('phoneNumber',
                           isEqualTo: phone
-                              .replaceAll("(", "")
-                              .replaceAll(")", "")
-                              .replaceAll("-", "")
-                              .replaceAll(" ", ""))
+                              .replaceAll('(', '')
+                              .replaceAll(')', '')
+                              .replaceAll('-', '')
+                              .replaceAll(' ', ''))
                       .get()
                       .then((querySnapshot) {
                     if (querySnapshot.size > 0) {
-                      ScreenArguments arguments = new ScreenArguments(
-                          querySnapshot.docs.first.data()["Altura"],
-                          querySnapshot.docs.first.data()["Message"],
-                          querySnapshot.docs.first.data()["CEP"],
-                          querySnapshot.docs.first.data()["Celular"],
-                          querySnapshot.docs.first.data()["Celular Emergencia"],
-                          querySnapshot.docs.first.data()["Cidade"],
-                          querySnapshot.docs.first.data()["Complemento"],
-                          querySnapshot.docs.first.data()["Data de nascimento"],
-                          querySnapshot.docs.first.data()["Estado"],
-                          querySnapshot.docs.first.data()["Nome"],
-                          querySnapshot.docs.first.data()["Nome Emergencia"],
-                          querySnapshot.docs.first.data()["Numero"],
-                          querySnapshot.docs.first.data()["Peso"],
-                          querySnapshot.docs.first.data()["Rua;"],
-                          querySnapshot.docs.first.data()["Tipo"]);
+                      var arguments = UserModel(
+                          querySnapshot.docs.first.data()['height'],
+                          querySnapshot.docs.first.data()['district'],
+                          querySnapshot.docs.first.data()['cep'],
+                          querySnapshot.docs.first.data()['phoneNumber'],
+                          querySnapshot.docs.first.data()['sosPhoneNumber'],
+                          querySnapshot.docs.first.data()['city'],
+                          querySnapshot.docs.first.data()['additionalAddress'],
+                          querySnapshot.docs.first.data()['birthDate'],
+                          querySnapshot.docs.first.data()['state'],
+                          querySnapshot.docs.first.data()['name'],
+                          querySnapshot.docs.first.data()['sosName'],
+                          querySnapshot.docs.first.data()['number'],
+                          querySnapshot.docs.first.data()['weigth'],
+                          querySnapshot.docs.first.data()['street;'],
+                          querySnapshot.docs.first.data()['bloodType']);
                       uc.setUser(arguments);
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Home(uc.user)),
+                        MaterialPageRoute(
+                            builder: (context) => HomePage(uc.user)),
                       );
                     }
-                  }).catchError((error) => print(error));
+                  }).catchError(print);
                 },
                 icon: Icon(
                   Icons.arrow_back_ios,
                   color: Colors.white,
                 ),
                 label: Text(
-                  "Entrar",
+                  'Entrar',
                   style: GoogleFonts.getFont(
-                    "Montserrat",
+                    'Montserrat',
                     fontSize: 22.0,
                     letterSpacing: 0.5,
                     color: Colors.white,

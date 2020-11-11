@@ -1,19 +1,20 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_tfg_eco/Arguments/ScreenArguments.dart';
-import 'package:flutter_app_tfg_eco/controller/user_controller.dart';
-import 'package:flutter_app_tfg_eco/views/login/login.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_app_tfg_eco/views/home/alterar.dart';
-import 'dart:convert';
-import 'homeTab.dart';
 
+import '../../models/user_model.dart';
+import '../login/login_page.dart';
+import 'home_tab.dart';
+import 'update_page.dart';
+
+/// Rota para o resultado da SVM no backend
 Future<Post> getSVMData() async {
   var response = await http
-      .get(Uri.encodeFull("http://192.168.0.152:8000/get-svm/18"), headers: {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
+      .get(Uri.encodeFull('http://192.168.0.152:8000/get-svm/18'), headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
   });
 
   if (response.statusCode == 200) {
@@ -23,11 +24,12 @@ Future<Post> getSVMData() async {
   }
 }
 
+/// Rota para o resultado da RNA no backend
 Future<Post> getRNAData() async {
   var response = await http
-      .get(Uri.encodeFull("http://192.168.0.152:8000/get-rna/18"), headers: {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
+      .get(Uri.encodeFull('http://192.168.0.152:8000/get-rna/18'), headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
   });
 
   if (response.statusCode == 200) {
@@ -37,12 +39,18 @@ Future<Post> getRNAData() async {
   }
 }
 
+/// Classe que recebe os dados do backend
 class Post {
+  /// Id do usuário
   final String personID;
+
+  /// Resultado da IA
   final List<dynamic> data;
 
+  /// Construtor
   Post({this.personID, this.data});
 
+  ///Convert JSON em MAP
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
       personID: json['personID'],
@@ -51,14 +59,19 @@ class Post {
   }
 }
 
-ScreenArguments user;
+/// Instancia Global do usuário
+UserModel user;
 
-// ignore: must_be_immutable
-class Home extends StatelessWidget {
+/// Page home
+class HomePage extends StatelessWidget {
+  /// Isntância para a SVM
   final Future<Post> svm = getSVMData();
+
+  /// Instância para a RNA
   final Future<Post> rna = getRNAData();
 
-  Home(ScreenArguments u) {
+  /// Construtor
+  HomePage(UserModel u) {
     user = u;
   }
 
@@ -106,9 +119,9 @@ class Home extends StatelessWidget {
               ],
             ),
             title: Text(
-              "Elderly",
+              'Elderly',
               style: TextStyle(
-                  fontFamily: "Cookie",
+                  fontFamily: 'Cookie',
                   fontSize: 45.0,
                   fontWeight: FontWeight.normal,
                   color: Colors.black,
@@ -120,8 +133,8 @@ class Home extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              HomeTab(svm, rna),
-              AlterarPage(),
+              HomePageTab(svm, rna),
+              UpdatePage(),
             ],
           ),
         ),

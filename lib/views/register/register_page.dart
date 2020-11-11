@@ -1,84 +1,96 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
-import "package:flutter/material.dart";
-import "package:flutter/rendering.dart";
-import "dart:ui";
+import 'dart:ui';
 
-import "package:flutter/widgets.dart";
-import 'package:flutter_app_tfg_eco/Arguments/ScreenArguments.dart';
-import "package:google_fonts/google_fonts.dart";
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:masked_text/masked_text.dart';
 
-import 'home.dart';
+import 'register_finish.dart';
 
-// ignore: must_be_immutable
-class AlterarPage extends StatefulWidget {
+/// Pagina de Cadastro
+class RegisterPage extends StatefulWidget {
   @override
-  _AlterarPageState createState() => _AlterarPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _AlterarPageState extends State<AlterarPage> {
+class _RegisterPageState extends State<RegisterPage> {
+  String _dropdownEstado = 'Selecionar';
+  String _dropdownSangue = 'Selecionar';
+  DateTime selectedDate = DateTime.now();
+  final format = DateFormat('yyyy-MM-dd');
   // ignore: deprecated_member_use
   final firestoreInstance = Firestore.instance;
+  String id = '';
 
   //Itens do cadastro
-  TextEditingController _cepController = TextEditingController();
-  TextEditingController _ruaController = TextEditingController();
-  TextEditingController _bairroController = TextEditingController();
-  TextEditingController _numeroController = TextEditingController();
-  TextEditingController _complementoController = TextEditingController();
-  TextEditingController _cidadeController = TextEditingController();
-  TextEditingController _pesoController = TextEditingController();
-  TextEditingController _alturaController = TextEditingController();
-  TextEditingController _emergencyPhoneController = TextEditingController();
-  TextEditingController _nomeEmergenciaController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _cepController = TextEditingController();
+  final TextEditingController _ruaController = TextEditingController();
+  final TextEditingController _bairroController = TextEditingController();
+  final TextEditingController _numeroController = TextEditingController();
+  final TextEditingController _complementoController = TextEditingController();
+  final TextEditingController _cidadeController = TextEditingController();
+  final TextEditingController _nascimentoController = TextEditingController();
+  final TextEditingController _pesoController = TextEditingController();
+  final TextEditingController _alturaController = TextEditingController();
+  final TextEditingController _emergencyPhoneController =
+      TextEditingController();
+  final TextEditingController _nomeEmergenciaController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    String _dropdownEstado = user.Estado;
-    print("Cel: " + user.Numero);
     return Scaffold(
       resizeToAvoidBottomPadding: true,
+      appBar: AppBar(
+        title: Text(
+          'Cadastro',
+          style: TextStyle(
+            fontFamily: 'Cookie',
+            fontSize: 50.0,
+            fontWeight: FontWeight.normal,
+            color: Colors.black,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Color.fromRGBO(127, 181, 190, 1),
+      ),
       backgroundColor: Color.fromRGBO(250, 250, 250, 0.9),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
+        padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 0.0),
         child: Container(
           margin: EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
               Container(
-                child: Text(
-                  "Alterar Dados",
-                  style: GoogleFonts.getFont("Montserrat",
-                      fontSize: 22.0,
-                      letterSpacing: 0.5,
-                      decoration: TextDecoration.underline,
-                      decorationThickness: 1.3),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Container(
                 alignment: Alignment.topLeft,
-                padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
                 child: Text(
-                  "CEP:",
-                  style: GoogleFonts.getFont("Montserrat",
+                  'Celular:',
+                  style: GoogleFonts.getFont('Montserrat',
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
               MaskedTextField(
-                keyboardType: TextInputType.number,
-                mask: "xxxxx-xxx",
+                keyboardType: TextInputType.phone,
+                maxLength: 15,
+                maskedTextFieldController: _phoneController,
                 escapeCharacter: 'x',
-                maskedTextFieldController: _cepController,
-                maxLength: 9,
+                mask: '(xx) xxxxx-xxxx',
                 inputDecoration: InputDecoration(
-                  counterText: "",
+                  counterText: '',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont("Montserrat",
+                  labelStyle: GoogleFonts.getFont('Montserrat',
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -86,8 +98,54 @@ class _AlterarPageState extends State<AlterarPage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 child: Text(
-                  "Rua:",
-                  style: GoogleFonts.getFont("Montserrat",
+                  'Nome Completo:',
+                  style: GoogleFonts.getFont('Montserrat',
+                      fontSize: 18.0, letterSpacing: 0.5),
+                ),
+              ),
+              TextFormField(
+                maxLength: 200,
+                keyboardType: TextInputType.name,
+                controller: _nomeController,
+                decoration: InputDecoration(
+                  counterText: '',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  labelStyle: GoogleFonts.getFont('Montserrat',
+                      fontSize: 15.0, letterSpacing: 0.5),
+                ),
+              ),
+              Container(
+                alignment: Alignment.topLeft,
+                padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                child: Text(
+                  'CEP:',
+                  style: GoogleFonts.getFont('Montserrat',
+                      fontSize: 18.0, letterSpacing: 0.5),
+                ),
+              ),
+              MaskedTextField(
+                keyboardType: TextInputType.number,
+                mask: 'xxxxx-xxx',
+                escapeCharacter: 'x',
+                maskedTextFieldController: _cepController,
+                maxLength: 9,
+                inputDecoration: InputDecoration(
+                  counterText: '',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  labelStyle: GoogleFonts.getFont('Montserrat',
+                      fontSize: 15.0, letterSpacing: 0.5),
+                ),
+              ),
+              Container(
+                alignment: Alignment.topLeft,
+                padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                child: Text(
+                  'Rua:',
+                  style: GoogleFonts.getFont('Montserrat',
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -98,7 +156,7 @@ class _AlterarPageState extends State<AlterarPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont("Montserrat",
+                  labelStyle: GoogleFonts.getFont('Montserrat',
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -106,8 +164,8 @@ class _AlterarPageState extends State<AlterarPage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 child: Text(
-                  "Bairro:",
-                  style: GoogleFonts.getFont("Montserrat",
+                  'Bairro:',
+                  style: GoogleFonts.getFont('Montserrat',
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -118,7 +176,7 @@ class _AlterarPageState extends State<AlterarPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont("Montserrat",
+                  labelStyle: GoogleFonts.getFont('Montserrat',
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -134,8 +192,8 @@ class _AlterarPageState extends State<AlterarPage> {
                             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Número:",
-                              style: GoogleFonts.getFont("Montserrat",
+                              'Número:',
+                              style: GoogleFonts.getFont('Montserrat',
                                   fontSize: 18.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -146,7 +204,7 @@ class _AlterarPageState extends State<AlterarPage> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              labelStyle: GoogleFonts.getFont("Montserrat",
+                              labelStyle: GoogleFonts.getFont('Montserrat',
                                   fontSize: 15.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -163,8 +221,8 @@ class _AlterarPageState extends State<AlterarPage> {
                             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Complemento:",
-                              style: GoogleFonts.getFont("Montserrat",
+                              'Complemento:',
+                              style: GoogleFonts.getFont('Montserrat',
                                   fontSize: 18.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -175,7 +233,7 @@ class _AlterarPageState extends State<AlterarPage> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              labelStyle: GoogleFonts.getFont("Montserrat",
+                              labelStyle: GoogleFonts.getFont('Montserrat',
                                   fontSize: 15.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -189,8 +247,8 @@ class _AlterarPageState extends State<AlterarPage> {
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Cidade:",
-                  style: GoogleFonts.getFont("Montserrat",
+                  'Cidade:',
+                  style: GoogleFonts.getFont('Montserrat',
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -201,7 +259,7 @@ class _AlterarPageState extends State<AlterarPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont("Montserrat",
+                  labelStyle: GoogleFonts.getFont('Montserrat',
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -209,8 +267,8 @@ class _AlterarPageState extends State<AlterarPage> {
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Estado:",
-                  style: GoogleFonts.getFont("Montserrat",
+                  'Estado:',
+                  style: GoogleFonts.getFont('Montserrat',
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -229,8 +287,10 @@ class _AlterarPageState extends State<AlterarPage> {
                         child: Icon(Icons.keyboard_arrow_down),
                       ),
                       value: _dropdownEstado,
-                      onChanged: (String newValue) {
-                        _dropdownEstado = newValue;
+                      onChanged: (newValue) {
+                        setState(() {
+                          _dropdownEstado = newValue;
+                        });
                       },
                       items: <String>[
                         'Selecionar',
@@ -261,12 +321,104 @@ class _AlterarPageState extends State<AlterarPage> {
                         'São Paulo',
                         'Sergipe',
                         'Tocantins'
-                      ].map<DropdownMenuItem<String>>((String value) {
+                      ].map<DropdownMenuItem<String>>((value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(
                             value,
-                            style: GoogleFonts.getFont("Montserrat",
+                            style: GoogleFonts.getFont('Montserrat',
+                                fontSize: 15.0,
+                                letterSpacing: 0.5,
+                                color: Colors.black45),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Data de Nascimento:',
+                  style: GoogleFonts.getFont('Montserrat',
+                      fontSize: 18.0, letterSpacing: 0.5),
+                ),
+              ),
+              DateTimeField(
+                format: format,
+                controller: _nascimentoController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+                initialValue: selectedDate,
+                onShowPicker: (context, currentValue) {
+                  return showDatePicker(
+                      context: context,
+                      firstDate: DateTime(1900),
+                      initialDate: selectedDate,
+                      lastDate: DateTime(2100));
+                },
+
+                // keyboardType: TextInputType.datetime,
+                // mask: 'xx/xx/xxxx',
+                // maxLength: 10,
+                // maskedTextFieldController: _nascimentoController,
+                // inputDecoration: InputDecoration(
+                //   counterText: '',
+                //   border: OutlineInputBorder(
+                //     borderRadius: BorderRadius.circular(10.0),
+                //   ),
+                // ),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Tipo Sanguíneo:',
+                  style: GoogleFonts.getFont('Montserrat',
+                      fontSize: 18.0, letterSpacing: 0.5),
+                ),
+              ),
+              Container(
+                width: 400.0,
+                height: 60.0,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(color: Colors.black45)),
+                child: DropdownButtonHideUnderline(
+                  child: Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: DropdownButton<String>(
+                      icon: Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Icon(Icons.keyboard_arrow_down),
+                      ),
+                      value: _dropdownSangue,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _dropdownSangue = newValue;
+                        });
+                      },
+                      items: <String>[
+                        'Selecionar',
+                        'A+',
+                        'A-',
+                        'B+',
+                        'B-',
+                        'AB+',
+                        'AB-',
+                        'O+',
+                        'O-'
+                      ].map<DropdownMenuItem<String>>((value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: GoogleFonts.getFont('Montserrat',
                                 fontSize: 15.0,
                                 letterSpacing: 0.5,
                                 color: Colors.black45),
@@ -289,19 +441,21 @@ class _AlterarPageState extends State<AlterarPage> {
                             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Peso (kg):",
-                              style: GoogleFonts.getFont("Montserrat",
+                              'Peso (kg):',
+                              style: GoogleFonts.getFont('Montserrat',
                                   fontSize: 18.0, letterSpacing: 0.5),
                             ),
                           ),
                           TextFormField(
                             keyboardType: TextInputType.number,
+                            maxLength: 3,
                             controller: _pesoController,
                             decoration: InputDecoration(
+                              counterText: '',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              labelStyle: GoogleFonts.getFont("Montserrat",
+                              labelStyle: GoogleFonts.getFont('Montserrat',
                                   fontSize: 15.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -318,19 +472,21 @@ class _AlterarPageState extends State<AlterarPage> {
                             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Altura (cm):",
-                              style: GoogleFonts.getFont("Montserrat",
+                              'Altura (cm):',
+                              style: GoogleFonts.getFont('Montserrat',
                                   fontSize: 18.0, letterSpacing: 0.5),
                             ),
                           ),
                           TextFormField(
+                            maxLength: 3,
                             keyboardType: TextInputType.number,
                             controller: _alturaController,
                             decoration: InputDecoration(
+                              counterText: '',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              labelStyle: GoogleFonts.getFont("Montserrat",
+                              labelStyle: GoogleFonts.getFont('Montserrat',
                                   fontSize: 15.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -343,8 +499,8 @@ class _AlterarPageState extends State<AlterarPage> {
               Container(
                 padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
                 child: Text(
-                  "Contato de Emergência",
-                  style: GoogleFonts.getFont("Montserrat",
+                  'Contato de Emergência',
+                  style: GoogleFonts.getFont('Montserrat',
                       fontSize: 22.0,
                       letterSpacing: 0.5,
                       decoration: TextDecoration.underline,
@@ -357,8 +513,8 @@ class _AlterarPageState extends State<AlterarPage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 10.0),
                 child: Text(
-                  "Celular:",
-                  style: GoogleFonts.getFont("Montserrat",
+                  'Celular:',
+                  style: GoogleFonts.getFont('Montserrat',
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -367,13 +523,13 @@ class _AlterarPageState extends State<AlterarPage> {
                 maxLength: 15,
                 maskedTextFieldController: _emergencyPhoneController,
                 escapeCharacter: 'x',
-                mask: "(xx) xxxxx-xxxx",
+                mask: '(xx) xxxxx-xxxx',
                 inputDecoration: InputDecoration(
-                  counterText: "",
+                  counterText: '',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont("Montserrat",
+                  labelStyle: GoogleFonts.getFont('Montserrat',
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -381,8 +537,8 @@ class _AlterarPageState extends State<AlterarPage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 child: Text(
-                  "Nome Completo:",
-                  style: GoogleFonts.getFont("Montserrat",
+                  'Nome Completo:',
+                  style: GoogleFonts.getFont('Montserrat',
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -393,138 +549,59 @@ class _AlterarPageState extends State<AlterarPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont("Montserrat",
+                  labelStyle: GoogleFonts.getFont('Montserrat',
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
               Container(
                 height: 85.0,
                 width: 400.0,
-                padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
+                padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
                 child: RaisedButton(
                   color: Color.fromRGBO(44, 187, 101, 1),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   onPressed: () async {
+                    // Texto de finalização de cadastro
+                    //Registra o matuto no BD
                     await firestoreInstance
-                        .collection("Usuarios")
-                        .doc(user.Celular.replaceAll("(", "")
-                            .replaceAll(")", "")
-                            .replaceAll("-", "")
-                            .replaceAll(" ", ""))
-                        .update({
-                      "CEP": _cepController.text == null ||
-                              _cepController.text == ""
-                          ? user.CEP
-                          : _cepController.text,
-                      "Rua": _ruaController.text == null ||
-                              _ruaController.text == ""
-                          ? user.Rua
-                          : _ruaController.text,
-                      "Bairro": _bairroController.text == null ||
-                              _bairroController.text == ""
-                          ? user.Message
-                          : _bairroController.text,
-                      'Numero': _numeroController.text == null ||
-                              _numeroController.text == ""
-                          ? user.Numero
-                          : _numeroController.text,
-                      "Complemento": _complementoController.text == null ||
-                              _complementoController.text == ""
-                          ? user.Complemento
-                          : _complementoController.text,
-                      "Cidade": _cidadeController.text == null ||
-                              _cidadeController.text == ""
-                          ? user.Cidade
-                          : _cidadeController.text,
-                      'Estado': _dropdownEstado,
-                      'Peso': _pesoController.text == null ||
-                              _pesoController.text == ""
-                          ? user.Peso
-                          : _pesoController.text,
-                      'Altura': _alturaController.text == null ||
-                              _alturaController.text == ""
-                          ? user.Altura
-                          : _alturaController.text,
-                      'Celular Emergencia': _emergencyPhoneController.text
-                                      .replaceAll("(", "")
-                                      .replaceAll(")", "")
-                                      .replaceAll("-", "")
-                                      .replaceAll(" ", "") ==
-                                  null ||
-                              _emergencyPhoneController.text
-                                      .replaceAll("(", "")
-                                      .replaceAll(")", "")
-                                      .replaceAll("-", "")
-                                      .replaceAll(" ", "") ==
-                                  ""
-                          ? user.Celular_Emergencia
-                          : _emergencyPhoneController.text
-                              .replaceAll("(", "")
-                              .replaceAll(")", "")
-                              .replaceAll("-", "")
-                              .replaceAll(" ", ""),
-                      'Nome Emergencia':
-                          _nomeEmergenciaController.text == null ||
-                                  _nomeEmergenciaController.text == ""
-                              ? user.Nome_Emergencia
-                              : _nomeEmergenciaController.text,
+                        .collection('users')
+                        .doc(_phoneController.text
+                            .replaceAll('(', '')
+                            .replaceAll(')', '')
+                            .replaceAll('-', '')
+                            .replaceAll(' ', ''))
+                        .set({
+                      'phoneNumber': _phoneController.text
+                          .replaceAll('(', '')
+                          .replaceAll(')', '')
+                          .replaceAll('-', '')
+                          .replaceAll(' ', ''),
+                      'name': _nomeController.text,
+                      'cep': _cepController.text,
+                      'street': _ruaController.text,
+                      'district': _bairroController.text,
+                      'number': _numeroController.text,
+                      'additionalAddress': _complementoController.text,
+                      'city': _cidadeController.text,
+                      'state': _dropdownEstado,
+                      'birthDate': _nascimentoController.text,
+                      'bloodType': _dropdownSangue,
+                      'weigth': _pesoController.text,
+                      'height': _alturaController.text,
+                      'sosPhoneNumber': _emergencyPhoneController.text
+                          .replaceAll('(', '')
+                          .replaceAll(')', '')
+                          .replaceAll('-', '')
+                          .replaceAll(' ', ''),
+                      'sosName': _nomeEmergenciaController.text
                     });
-
-                    await firestoreInstance
-                        .collection("Usuarios")
-                        .where("Celular",
-                            isEqualTo: user.Celular.replaceAll("(", "")
-                                .replaceAll(")", "")
-                                .replaceAll("-", "")
-                                .replaceAll(" ", ""))
-                        .get()
-                        .then((querySnapshot) {
-                      user = new ScreenArguments(
-                          querySnapshot.docs.first.data()["Altura"],
-                          querySnapshot.docs.first.data()["Bairro"],
-                          querySnapshot.docs.first.data()["CEP"],
-                          querySnapshot.docs.first.data()["Celular"],
-                          querySnapshot.docs.first.data()["Celular Emergencia"],
-                          querySnapshot.docs.first.data()["Cidade"],
-                          querySnapshot.docs.first.data()["Complemento"],
-                          querySnapshot.docs.first.data()["Data de nascimento"],
-                          querySnapshot.docs.first.data()["Estado"],
-                          querySnapshot.docs.first.data()["Nome"],
-                          querySnapshot.docs.first.data()["Nome Emergencia"],
-                          querySnapshot.docs.first.data()["Numero"],
-                          querySnapshot.docs.first.data()["Peso"],
-                          querySnapshot.docs.first.data()["Rua"],
-                          querySnapshot.docs.first.data()["Tipo"]);
-                    }).catchError((error) => print(error));
-
-                    // ignore: deprecated_member_use
-                    Scaffold.of(context).showSnackBar(
-                      SnackBar(
-                        duration: Duration(seconds: 1),
-                        content: Row(
-                          children: [
-                            Icon(
-                              Icons.thumb_up,
-                              color: Colors.white,
-                            ),
-                            SizedBox(width: 20),
-                            Expanded(
-                              child: Text(
-                                "Alteração realizada com sucesso!",
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    );
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                RegisterFinish(_phoneController.text)));
                   },
                   textColor: Colors.white,
                   padding: EdgeInsets.all(0.0),
@@ -538,9 +615,9 @@ class _AlterarPageState extends State<AlterarPage> {
                       ),
                     ),
                     child: Text(
-                      "Concluir",
+                      'Concluir',
                       style: GoogleFonts.getFont(
-                        "Montserrat",
+                        'Montserrat',
                         fontSize: 22.0,
                         letterSpacing: 0.5,
                       ),

@@ -1,137 +1,85 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:flutter/cupertino.dart';
-import "package:flutter/material.dart";
-import "package:flutter/rendering.dart";
-import 'package:flutter/services.dart';
-import "dart:ui";
+import 'dart:ui';
 
-import "package:flutter/widgets.dart";
-import 'package:flutter_app_tfg_eco/views/register/cadastoConcluido.dart';
-import "package:google_fonts/google_fonts.dart";
-import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:masked_text/masked_text.dart';
 
-class CadastroPage extends StatefulWidget {
+import '../../models/user_model.dart';
+import 'home_page.dart';
+
+/// Página para atualizar os dados de usuário
+class UpdatePage extends StatefulWidget {
   @override
-  _CadastroPageState createState() => _CadastroPageState();
+  _UpdatePageState createState() => _UpdatePageState();
 }
 
-class _CadastroPageState extends State<CadastroPage> {
-  String _dropdownEstado = 'Selecionar';
-  String _dropdownSangue = 'Selecionar';
-  DateTime selectedDate = DateTime.now();
-  final format = DateFormat("yyyy-MM-dd");
+class _UpdatePageState extends State<UpdatePage> {
   // ignore: deprecated_member_use
   final firestoreInstance = Firestore.instance;
-  String id = "";
 
   //Itens do cadastro
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _nomeController = TextEditingController();
-  TextEditingController _cepController = TextEditingController();
-  TextEditingController _ruaController = TextEditingController();
-  TextEditingController _bairroController = TextEditingController();
-  TextEditingController _numeroController = TextEditingController();
-  TextEditingController _complementoController = TextEditingController();
-  TextEditingController _cidadeController = TextEditingController();
-  TextEditingController _nascimentoController = TextEditingController();
-  TextEditingController _pesoController = TextEditingController();
-  TextEditingController _alturaController = TextEditingController();
-  TextEditingController _emergencyPhoneController = TextEditingController();
-  TextEditingController _nomeEmergenciaController = TextEditingController();
+  final TextEditingController _cepController = TextEditingController();
+  final TextEditingController _ruaController = TextEditingController();
+  final TextEditingController _bairroController = TextEditingController();
+  final TextEditingController _numeroController = TextEditingController();
+  final TextEditingController _complementoController = TextEditingController();
+  final TextEditingController _cidadeController = TextEditingController();
+  final TextEditingController _pesoController = TextEditingController();
+  final TextEditingController _alturaController = TextEditingController();
+  final TextEditingController _emergencyPhoneController =
+      TextEditingController();
+  final TextEditingController _nomeEmergenciaController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    var _dropdownEstado = 'Selecionar';
     return Scaffold(
       resizeToAvoidBottomPadding: true,
-      appBar: AppBar(
-        title: Text(
-          "Cadastro",
-          style: TextStyle(
-            fontFamily: "Cookie",
-            fontSize: 50.0,
-            fontWeight: FontWeight.normal,
-            color: Colors.black,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Color.fromRGBO(127, 181, 190, 1),
-      ),
       backgroundColor: Color.fromRGBO(250, 250, 250, 0.9),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 0.0),
+        padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
         child: Container(
           margin: EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
               Container(
-                alignment: Alignment.topLeft,
-                padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
                 child: Text(
-                  "Celular:",
-                  style: GoogleFonts.getFont("Montserrat",
-                      fontSize: 18.0, letterSpacing: 0.5),
-                ),
-              ),
-              MaskedTextField(
-                keyboardType: TextInputType.phone,
-                maxLength: 15,
-                maskedTextFieldController: _phoneController,
-                escapeCharacter: 'x',
-                mask: "(xx) xxxxx-xxxx",
-                inputDecoration: InputDecoration(
-                  counterText: "",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  labelStyle: GoogleFonts.getFont("Montserrat",
-                      fontSize: 15.0, letterSpacing: 0.5),
+                  'Alterar Dados',
+                  style: GoogleFonts.getFont('Montserrat',
+                      fontSize: 22.0,
+                      letterSpacing: 0.5,
+                      decoration: TextDecoration.underline,
+                      decorationThickness: 1.3),
+                  textAlign: TextAlign.center,
                 ),
               ),
               Container(
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 child: Text(
-                  "Nome Completo:",
-                  style: GoogleFonts.getFont("Montserrat",
-                      fontSize: 18.0, letterSpacing: 0.5),
-                ),
-              ),
-              TextFormField(
-                maxLength: 200,
-                keyboardType: TextInputType.name,
-                controller: _nomeController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  labelStyle: GoogleFonts.getFont("Montserrat",
-                      fontSize: 15.0, letterSpacing: 0.5),
-                ),
-              ),
-              Container(
-                alignment: Alignment.topLeft,
-                padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                child: Text(
-                  "CEP:",
-                  style: GoogleFonts.getFont("Montserrat",
+                  'CEP:',
+                  style: GoogleFonts.getFont('Montserrat',
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
               MaskedTextField(
                 keyboardType: TextInputType.number,
-                mask: "xxxxx-xxx",
+                mask: 'xxxxx-xxx',
                 escapeCharacter: 'x',
                 maskedTextFieldController: _cepController,
                 maxLength: 9,
                 inputDecoration: InputDecoration(
-                  counterText: "",
+                  counterText: '',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont("Montserrat",
+                  labelStyle: GoogleFonts.getFont('Montserrat',
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -139,8 +87,8 @@ class _CadastroPageState extends State<CadastroPage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 child: Text(
-                  "Rua:",
-                  style: GoogleFonts.getFont("Montserrat",
+                  'Rua:',
+                  style: GoogleFonts.getFont('Montserrat',
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -151,7 +99,7 @@ class _CadastroPageState extends State<CadastroPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont("Montserrat",
+                  labelStyle: GoogleFonts.getFont('Montserrat',
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -159,8 +107,8 @@ class _CadastroPageState extends State<CadastroPage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 child: Text(
-                  "Bairro:",
-                  style: GoogleFonts.getFont("Montserrat",
+                  'Bairro:',
+                  style: GoogleFonts.getFont('Montserrat',
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -171,7 +119,7 @@ class _CadastroPageState extends State<CadastroPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont("Montserrat",
+                  labelStyle: GoogleFonts.getFont('Montserrat',
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -187,8 +135,8 @@ class _CadastroPageState extends State<CadastroPage> {
                             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Número:",
-                              style: GoogleFonts.getFont("Montserrat",
+                              'Número:',
+                              style: GoogleFonts.getFont('Montserrat',
                                   fontSize: 18.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -199,7 +147,7 @@ class _CadastroPageState extends State<CadastroPage> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              labelStyle: GoogleFonts.getFont("Montserrat",
+                              labelStyle: GoogleFonts.getFont('Montserrat',
                                   fontSize: 15.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -216,8 +164,8 @@ class _CadastroPageState extends State<CadastroPage> {
                             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Complemento:",
-                              style: GoogleFonts.getFont("Montserrat",
+                              'Complemento:',
+                              style: GoogleFonts.getFont('Montserrat',
                                   fontSize: 18.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -228,7 +176,7 @@ class _CadastroPageState extends State<CadastroPage> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              labelStyle: GoogleFonts.getFont("Montserrat",
+                              labelStyle: GoogleFonts.getFont('Montserrat',
                                   fontSize: 15.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -242,8 +190,8 @@ class _CadastroPageState extends State<CadastroPage> {
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Cidade:",
-                  style: GoogleFonts.getFont("Montserrat",
+                  'Cidade:',
+                  style: GoogleFonts.getFont('Montserrat',
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -254,7 +202,7 @@ class _CadastroPageState extends State<CadastroPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont("Montserrat",
+                  labelStyle: GoogleFonts.getFont('Montserrat',
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -262,8 +210,8 @@ class _CadastroPageState extends State<CadastroPage> {
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Estado:",
-                  style: GoogleFonts.getFont("Montserrat",
+                  'Estado:',
+                  style: GoogleFonts.getFont('Montserrat',
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -282,7 +230,7 @@ class _CadastroPageState extends State<CadastroPage> {
                         child: Icon(Icons.keyboard_arrow_down),
                       ),
                       value: _dropdownEstado,
-                      onChanged: (String newValue) {
+                      onChanged: (newValue) {
                         setState(() {
                           _dropdownEstado = newValue;
                         });
@@ -316,104 +264,12 @@ class _CadastroPageState extends State<CadastroPage> {
                         'São Paulo',
                         'Sergipe',
                         'Tocantins'
-                      ].map<DropdownMenuItem<String>>((String value) {
+                      ].map<DropdownMenuItem<String>>((value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(
                             value,
-                            style: GoogleFonts.getFont("Montserrat",
-                                fontSize: 15.0,
-                                letterSpacing: 0.5,
-                                color: Colors.black45),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Data de Nascimento:",
-                  style: GoogleFonts.getFont("Montserrat",
-                      fontSize: 18.0, letterSpacing: 0.5),
-                ),
-              ),
-              DateTimeField(
-                format: format,
-                controller: _nascimentoController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-                initialValue: selectedDate,
-                onShowPicker: (context, currentValue) {
-                  return showDatePicker(
-                      context: context,
-                      firstDate: DateTime(1900),
-                      initialDate: selectedDate,
-                      lastDate: DateTime(2100));
-                },
-
-                // keyboardType: TextInputType.datetime,
-                // mask: "xx/xx/xxxx",
-                // maxLength: 10,
-                // maskedTextFieldController: _nascimentoController,
-                // inputDecoration: InputDecoration(
-                //   counterText: "",
-                //   border: OutlineInputBorder(
-                //     borderRadius: BorderRadius.circular(10.0),
-                //   ),
-                // ),
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Tipo Sanguíneo:",
-                  style: GoogleFonts.getFont("Montserrat",
-                      fontSize: 18.0, letterSpacing: 0.5),
-                ),
-              ),
-              Container(
-                width: 400.0,
-                height: 60.0,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(color: Colors.black45)),
-                child: DropdownButtonHideUnderline(
-                  child: Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: DropdownButton<String>(
-                      icon: Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Icon(Icons.keyboard_arrow_down),
-                      ),
-                      value: _dropdownSangue,
-                      onChanged: (String newValue) {
-                        setState(() {
-                          _dropdownSangue = newValue;
-                        });
-                      },
-                      items: <String>[
-                        'Selecionar',
-                        'A+',
-                        'A-',
-                        'B+',
-                        'B-',
-                        'AB+',
-                        'AB-',
-                        'O+',
-                        'O-'
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: GoogleFonts.getFont("Montserrat",
+                            style: GoogleFonts.getFont('Montserrat',
                                 fontSize: 15.0,
                                 letterSpacing: 0.5,
                                 color: Colors.black45),
@@ -436,21 +292,19 @@ class _CadastroPageState extends State<CadastroPage> {
                             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Peso (kg):",
-                              style: GoogleFonts.getFont("Montserrat",
+                              'Peso (kg):',
+                              style: GoogleFonts.getFont('Montserrat',
                                   fontSize: 18.0, letterSpacing: 0.5),
                             ),
                           ),
                           TextFormField(
                             keyboardType: TextInputType.number,
-                            maxLength: 3,
                             controller: _pesoController,
                             decoration: InputDecoration(
-                              counterText: "",
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              labelStyle: GoogleFonts.getFont("Montserrat",
+                              labelStyle: GoogleFonts.getFont('Montserrat',
                                   fontSize: 15.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -467,21 +321,19 @@ class _CadastroPageState extends State<CadastroPage> {
                             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                             alignment: Alignment.topLeft,
                             child: Text(
-                              "Altura (cm):",
-                              style: GoogleFonts.getFont("Montserrat",
+                              'Altura (cm):',
+                              style: GoogleFonts.getFont('Montserrat',
                                   fontSize: 18.0, letterSpacing: 0.5),
                             ),
                           ),
                           TextFormField(
-                            maxLength: 3,
                             keyboardType: TextInputType.number,
                             controller: _alturaController,
                             decoration: InputDecoration(
-                              counterText: "",
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              labelStyle: GoogleFonts.getFont("Montserrat",
+                              labelStyle: GoogleFonts.getFont('Montserrat',
                                   fontSize: 15.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -494,8 +346,8 @@ class _CadastroPageState extends State<CadastroPage> {
               Container(
                 padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
                 child: Text(
-                  "Contato de Emergência",
-                  style: GoogleFonts.getFont("Montserrat",
+                  'Contato de Emergência',
+                  style: GoogleFonts.getFont('Montserrat',
                       fontSize: 22.0,
                       letterSpacing: 0.5,
                       decoration: TextDecoration.underline,
@@ -508,8 +360,8 @@ class _CadastroPageState extends State<CadastroPage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 10.0),
                 child: Text(
-                  "Celular:",
-                  style: GoogleFonts.getFont("Montserrat",
+                  'Celular:',
+                  style: GoogleFonts.getFont('Montserrat',
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -518,13 +370,13 @@ class _CadastroPageState extends State<CadastroPage> {
                 maxLength: 15,
                 maskedTextFieldController: _emergencyPhoneController,
                 escapeCharacter: 'x',
-                mask: "(xx) xxxxx-xxxx",
+                mask: '(xx) xxxxx-xxxx',
                 inputDecoration: InputDecoration(
-                  counterText: "",
+                  counterText: '',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont("Montserrat",
+                  labelStyle: GoogleFonts.getFont('Montserrat',
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -532,8 +384,8 @@ class _CadastroPageState extends State<CadastroPage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 child: Text(
-                  "Nome Completo:",
-                  style: GoogleFonts.getFont("Montserrat",
+                  'Nome Completo:',
+                  style: GoogleFonts.getFont('Montserrat',
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -544,59 +396,142 @@ class _CadastroPageState extends State<CadastroPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont("Montserrat",
+                  labelStyle: GoogleFonts.getFont('Montserrat',
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
               Container(
                 height: 85.0,
                 width: 400.0,
-                padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+                padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
                 child: RaisedButton(
                   color: Color.fromRGBO(44, 187, 101, 1),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  onPressed: () {
-                    // Texto de finalização de cadastro
-                    //Registra o matuto no BD
-                    firestoreInstance
-                        .collection("Usuarios")
-                        .doc(_phoneController.text
-                            .replaceAll("(", "")
-                            .replaceAll(")", "")
-                            .replaceAll("-", "")
-                            .replaceAll(" ", ""))
-                        .set({
-                      "Celular": _phoneController.text
-                          .replaceAll("(", "")
-                          .replaceAll(")", "")
-                          .replaceAll("-", "")
-                          .replaceAll(" ", ""),
-                      "Nome": _nomeController.text,
-                      "CEP": _cepController.text,
-                      "Rua": _ruaController.text,
-                      "Bairro": _bairroController.text,
-                      'Numero': _numeroController.text,
-                      "Complemento": _complementoController.text,
-                      "Cidade": _cidadeController.text,
-                      'Estado': _dropdownEstado,
-                      'Data de nascimento': _nascimentoController.text,
-                      'Tipo': _dropdownSangue,
-                      'Peso': _pesoController.text,
-                      'Altura': _alturaController.text,
-                      'Celular Emergencia': _emergencyPhoneController.text
-                          .replaceAll("(", "")
-                          .replaceAll(")", "")
-                          .replaceAll("-", "")
-                          .replaceAll(" ", ""),
-                      'Nome Emergencia': _nomeEmergenciaController.text
+                  onPressed: () async {
+                    await firestoreInstance
+                        .collection('users')
+                        .doc(user.phoneNumber
+                            .replaceAll('(', '')
+                            .replaceAll(')', '')
+                            .replaceAll('-', '')
+                            .replaceAll(' ', ''))
+                        .update({
+                      'cep': _cepController.text == null ||
+                              _cepController.text == ''
+                          ? user.postalCode
+                          : _cepController.text,
+                      'street': _ruaController.text == null ||
+                              _ruaController.text == ''
+                          ? user.street
+                          : _ruaController.text,
+                      'district': _bairroController.text == null ||
+                              _bairroController.text == ''
+                          ? user.district
+                          : _bairroController.text,
+                      'number': _numeroController.text == null ||
+                              _numeroController.text == ''
+                          ? user.number
+                          : _numeroController.text,
+                      'additionalAddress':
+                          _complementoController.text == null ||
+                                  _complementoController.text == ''
+                              ? user.additionalAddress
+                              : _complementoController.text,
+                      'city': _cidadeController.text == null ||
+                              _cidadeController.text == ''
+                          ? user.city
+                          : _cidadeController.text,
+                      'state': _dropdownEstado == 'Selecionar'
+                          ? user.state
+                          : _dropdownEstado,
+                      'weigth': _pesoController.text == null ||
+                              _pesoController.text == ''
+                          ? user.weigth
+                          : _pesoController.text,
+                      'height': _alturaController.text == null ||
+                              _alturaController.text == ''
+                          ? user.height
+                          : _alturaController.text,
+                      'sosPhoneNumber': _emergencyPhoneController.text
+                                      .replaceAll('(', '')
+                                      .replaceAll(')', '')
+                                      .replaceAll('-', '')
+                                      .replaceAll(' ', '') ==
+                                  null ||
+                              _emergencyPhoneController.text
+                                      .replaceAll('(', '')
+                                      .replaceAll(')', '')
+                                      .replaceAll('-', '')
+                                      .replaceAll(' ', '') ==
+                                  ''
+                          ? user.sosPhoneNumber
+                          : _emergencyPhoneController.text
+                              .replaceAll('(', '')
+                              .replaceAll(')', '')
+                              .replaceAll('-', '')
+                              .replaceAll(' ', ''),
+                      'sosName': _nomeEmergenciaController.text == null ||
+                              _nomeEmergenciaController.text == ''
+                          ? user.sosName
+                          : _nomeEmergenciaController.text,
                     });
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                CadastroConcluidoPage(_phoneController.text)));
+
+                    await firestoreInstance
+                        .collection('users')
+                        .where('phoneNumber',
+                            isEqualTo: user.phoneNumber
+                                .replaceAll('(', '')
+                                .replaceAll(')', '')
+                                .replaceAll('-', '')
+                                .replaceAll(' ', ''))
+                        .get()
+                        .then((querySnapshot) {
+                      user = UserModel(
+                          querySnapshot.docs.first.data()['height'],
+                          querySnapshot.docs.first.data()['district'],
+                          querySnapshot.docs.first.data()['cep'],
+                          querySnapshot.docs.first.data()['phoneNumber'],
+                          querySnapshot.docs.first.data()['sosPhoneNumber'],
+                          querySnapshot.docs.first.data()['city'],
+                          querySnapshot.docs.first.data()['additionalAddress'],
+                          querySnapshot.docs.first.data()['birthDate'],
+                          querySnapshot.docs.first.data()['state'],
+                          querySnapshot.docs.first.data()['name'],
+                          querySnapshot.docs.first.data()['sosName'],
+                          querySnapshot.docs.first.data()['number'],
+                          querySnapshot.docs.first.data()['weigth'],
+                          querySnapshot.docs.first.data()['street'],
+                          querySnapshot.docs.first.data()['bloodType']);
+                    }).catchError(print);
+
+                    // ignore: deprecated_member_use
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        duration: Duration(seconds: 1),
+                        content: Row(
+                          children: [
+                            Icon(
+                              Icons.thumb_up,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 20),
+                            Expanded(
+                              child: Text(
+                                'Alteração realizada com sucesso!',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
                   },
                   textColor: Colors.white,
                   padding: EdgeInsets.all(0.0),
@@ -610,9 +545,9 @@ class _CadastroPageState extends State<CadastroPage> {
                       ),
                     ),
                     child: Text(
-                      "Concluir",
+                      'Concluir',
                       style: GoogleFonts.getFont(
-                        "Montserrat",
+                        'Montserrat',
                         fontSize: 22.0,
                         letterSpacing: 0.5,
                       ),

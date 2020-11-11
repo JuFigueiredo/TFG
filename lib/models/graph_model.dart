@@ -2,16 +2,20 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
+/// Grafico de Linhas
 class SimpleLineChart extends StatelessWidget {
+  /// Lista de Graficos
   final List<charts.Series> seriesList;
+
+  /// Flag
   final bool animate;
 
+  /// Construtor
   SimpleLineChart(this.seriesList, {this.animate});
 
   /// Creates a [LineChart] with sample data and no transition.
   factory SimpleLineChart.withData(List<dynamic> data) {
-    return new SimpleLineChart(
+    return SimpleLineChart(
       _formatData(data),
       // Disable animations for image tests.
       animate: false,
@@ -20,21 +24,21 @@ class SimpleLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new charts.NumericComboChart(
+    return charts.NumericComboChart(
       seriesList,
       animate: animate,
-      defaultRenderer: new charts.LineRendererConfig(
+      defaultRenderer: charts.LineRendererConfig(
         includeArea: true,
         stacked: true,
       ),
       customSeriesRenderers: [
-        new charts.PointRendererConfig(
+        charts.PointRendererConfig(
           // ID used to link series to this renderer.
           customRendererId: 'customPoint',
         )
       ],
-      primaryMeasureAxis: new charts.NumericAxisSpec(
-        tickProviderSpec: new charts.BasicNumericTickProviderSpec(
+      primaryMeasureAxis: charts.NumericAxisSpec(
+        tickProviderSpec: charts.BasicNumericTickProviderSpec(
             // Make sure we don't have values less than 1 as ticks
             // (ie: counts).
             dataIsInWholeNumbers: false,
@@ -51,47 +55,47 @@ class SimpleLineChart extends StatelessWidget {
         //     labelAnchor: charts.TickLabelAnchor.before, )
       ),
       behaviors: [
-        new charts.SeriesLegend(horizontalFirst: true),
+        charts.SeriesLegend(horizontalFirst: true),
       ],
     );
   }
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<Dado, double>> _formatData(List<dynamic> data) {
-    double time = -2.56;
-    List<Dado> array = new List<Dado>();
-    List<Dado> quedas = new List<Dado>();
-    int last = -1;
+    var time = -2.56;
+    var array = <Dado>[];
+    var quedas = <Dado>[];
+    var last = -1;
 
+    // ignore: avoid_function_literals_in_foreach_calls
     data.forEach((element) {
       time += 2.56;
       if (last == 5 && element == 6) {
-        Dado queda = new Dado(time, element);
+        var queda = Dado(time, element);
         quedas.add(queda);
       }
       last = element;
-      Dado pos = new Dado(time, element);
+      var pos = Dado(time, element);
       array.add(pos);
     });
 
     // Dado test = new Dado(2, 6);
-    // print("Posicao {${test.posicao}}");
-    // print("Tempo {${test.tempo}}");
+    // print('Posicao {${test.posicao}}');
+    // print('Tempo {${test.tempo}}');
 
     return [
-      new charts.Series<Dado, double>(
-        id: "Posição em relação ao tempo",
-        colorFn: (Dado data, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (Dado data, _) => data.tempo,
-        measureFn: (Dado data, _) => data.posicao,
+      charts.Series<Dado, double>(
+        id: 'Posição em relação ao tempo',
+        colorFn: (data, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (data, _) => data.tempo,
+        measureFn: (data, _) => data.posicao,
         data: array,
       ),
-      new charts.Series<Dado, double>(
-        id: "Ocorrência de queda",
-        colorFn: (Dado data, __) =>
-            charts.MaterialPalette.red.shadeDefault.darker,
-        domainFn: (Dado data, _) => data.tempo,
-        measureFn: (Dado data, _) => data.posicao - 6,
+      charts.Series<Dado, double>(
+        id: 'Ocorrência de queda',
+        colorFn: (data, __) => charts.MaterialPalette.red.shadeDefault.darker,
+        domainFn: (data, _) => data.tempo,
+        measureFn: (data, _) => data.posicao - 6,
         data: quedas,
       )
     ];
@@ -100,15 +104,19 @@ class SimpleLineChart extends StatelessWidget {
 
 /// Sample linear data type.
 class Dado {
+  /// Eixo x em segundos
   final double tempo;
+
+  /// Eixo y resultado do Machine Learning
   final int posicao;
 
+  /// Construtor
   Dado(this.tempo, this.posicao);
 }
 
 // ignore: missing_return
 String _formatterMeasureAxis(num y) {
-  int i = y.toInt();
+  var i = y.toInt();
   switch (i) {
     case 1:
       return 'Caminhando';

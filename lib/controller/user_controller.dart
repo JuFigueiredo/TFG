@@ -1,28 +1,32 @@
-import 'package:flutter_app_tfg_eco/Arguments/ScreenArguments.dart';
+import '../models/user_model.dart';
 
+/// Classe controller para atualização dos dados do usuário
 class UserController {
-  ScreenArguments user = ScreenArguments(
-      '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+  /// Instância do usuário
+  UserModel user =
+      UserModel('', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
-  ScreenArguments getUser() {
+  /// Retorna informações do usuário
+  UserModel getUser() {
     return user;
   }
 
-  void setUser(ScreenArguments arguments) {
-    user.Altura = arguments.Altura;
-    user.Message = arguments.Message;
-    user.CEP = arguments.CEP;
-    user.Celular = arguments.Celular;
-    user.Celular_Emergencia = arguments.Celular_Emergencia;
-    user.Cidade = arguments.Cidade;
-    user.Complemento = arguments.Complemento;
-    user.Data_de_nascimento = arguments.Data_de_nascimento;
-    user.Estado = arguments.Estado;
-    user.Nome = arguments.Nome;
-    user.Nome_Emergencia = arguments.Nome_Emergencia;
-    user.Numero = arguments.Numero;
-    user.Peso = arguments.Peso;
-    user.Rua = arguments.Rua;
-    user.Tipo = arguments.Tipo;
+  /// Atribuição dos dados do usuário
+  void setUser(UserModel arguments) {
+    user.height = arguments.height;
+    user.district = arguments.district;
+    user.postalCode = arguments.postalCode;
+    user.phoneNumber = arguments.phoneNumber;
+    user.sosPhoneNumber = arguments.sosPhoneNumber;
+    user.city = arguments.city;
+    user.additionalAddress = arguments.additionalAddress;
+    user.birthDate = arguments.birthDate;
+    user.state = arguments.state;
+    user.name = arguments.name;
+    user.sosName = arguments.sosName;
+    user.number = arguments.number;
+    user.weigth = arguments.weigth;
+    user.street = arguments.street;
+    user.bloodType = arguments.bloodType;
   }
 }

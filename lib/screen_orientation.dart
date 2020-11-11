@@ -22,6 +22,7 @@ mixin PortraitModeMixin on StatelessWidget {
 /// Call `super.build(context)` in the State's build() method
 /// and `super.dispose();` in the State's dispose() method
 mixin PortraitStatefulModeMixin<T extends StatefulWidget> on State<T> {
+  /// Construtor para inicializar a tela em modo paisagem
   Widget buildLandscape(BuildContext context) {
     _landscapeModeOnly();
     return null;
