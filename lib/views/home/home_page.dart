@@ -12,9 +12,9 @@ import 'update_page.dart';
 /// Rota para o resultado da SVM no backend
 Future<Post> getSVMData() async {
   var response = await http
-      .get(Uri.encodeFull('http://192.168.0.152:8000/get-svm/18'), headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
+      .get(Uri.encodeFull("http://192.168.25.13:8000/get-svm/18"), headers: {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
   });
 
   if (response.statusCode == 200) {
@@ -27,11 +27,10 @@ Future<Post> getSVMData() async {
 /// Rota para o resultado da RNA no backend
 Future<Post> getRNAData() async {
   var response = await http
-      .get(Uri.encodeFull('http://192.168.0.152:8000/get-rna/18'), headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
+      .get(Uri.encodeFull("http://192.168.25.13:8000/get-rna/18"), headers: {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
   });
-
   if (response.statusCode == 200) {
     return Post.fromJson(json.decode(response.body));
   } else {
