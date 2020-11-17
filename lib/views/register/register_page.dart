@@ -1,32 +1,32 @@
-import 'dart:ui';
+import "dart:ui";
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import "package:flutter/material.dart";
+import "package:flutter/rendering.dart";
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
+import "package:flutter/widgets.dart";
+import "package:google_fonts/google_fonts.dart";
 import 'package:intl/intl.dart';
 import 'package:masked_text/masked_text.dart';
 
-import 'register_finish.dart';
+import 'register_finished.dart';
 
 /// Pagina de Cadastro
-class RegisterPage extends StatefulWidget {
+class CadastroPage extends StatefulWidget {
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _CadastroPageState createState() => _CadastroPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _CadastroPageState extends State<CadastroPage> {
   String _dropdownEstado = 'Selecionar';
   String _dropdownSangue = 'Selecionar';
   DateTime selectedDate = DateTime.now();
-  final format = DateFormat('yyyy-MM-dd');
+  final format = DateFormat("yyyy-MM-dd");
   // ignore: deprecated_member_use
   final firestoreInstance = Firestore.instance;
-  String id = '';
+  String id = "";
 
   //Itens do cadastro
   final TextEditingController _phoneController = TextEditingController();
@@ -51,9 +51,9 @@ class _RegisterPageState extends State<RegisterPage> {
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(
         title: Text(
-          'Cadastro',
+          "Cadastro",
           style: TextStyle(
-            fontFamily: 'Cookie',
+            fontFamily: "Cookie",
             fontSize: 50.0,
             fontWeight: FontWeight.normal,
             color: Colors.black,
@@ -74,8 +74,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
                 child: Text(
-                  'Celular:',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Celular:",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -84,13 +84,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 maxLength: 15,
                 maskedTextFieldController: _phoneController,
                 escapeCharacter: 'x',
-                mask: '(xx) xxxxx-xxxx',
+                mask: "(xx) xxxxx-xxxx",
                 inputDecoration: InputDecoration(
-                  counterText: '',
+                  counterText: "",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont('Montserrat',
+                  labelStyle: GoogleFonts.getFont("Montserrat",
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -98,8 +98,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 child: Text(
-                  'Nome Completo:',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Nome Completo:",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -108,11 +108,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 keyboardType: TextInputType.name,
                 controller: _nomeController,
                 decoration: InputDecoration(
-                  counterText: '',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont('Montserrat',
+                  labelStyle: GoogleFonts.getFont("Montserrat",
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -120,23 +119,23 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 child: Text(
-                  'CEP:',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "CEP:",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
               MaskedTextField(
                 keyboardType: TextInputType.number,
-                mask: 'xxxxx-xxx',
+                mask: "xxxxx-xxx",
                 escapeCharacter: 'x',
                 maskedTextFieldController: _cepController,
                 maxLength: 9,
                 inputDecoration: InputDecoration(
-                  counterText: '',
+                  counterText: "",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont('Montserrat',
+                  labelStyle: GoogleFonts.getFont("Montserrat",
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -144,8 +143,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 child: Text(
-                  'Rua:',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Rua:",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -156,7 +155,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont('Montserrat',
+                  labelStyle: GoogleFonts.getFont("Montserrat",
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -164,8 +163,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 child: Text(
-                  'Bairro:',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Bairro:",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -176,7 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont('Montserrat',
+                  labelStyle: GoogleFonts.getFont("Montserrat",
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -192,8 +191,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Número:',
-                              style: GoogleFonts.getFont('Montserrat',
+                              "Número:",
+                              style: GoogleFonts.getFont("Montserrat",
                                   fontSize: 18.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -204,7 +203,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              labelStyle: GoogleFonts.getFont('Montserrat',
+                              labelStyle: GoogleFonts.getFont("Montserrat",
                                   fontSize: 15.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -221,8 +220,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Complemento:',
-                              style: GoogleFonts.getFont('Montserrat',
+                              "Complemento:",
+                              style: GoogleFonts.getFont("Montserrat",
                                   fontSize: 18.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -233,7 +232,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              labelStyle: GoogleFonts.getFont('Montserrat',
+                              labelStyle: GoogleFonts.getFont("Montserrat",
                                   fontSize: 15.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -247,8 +246,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Cidade:',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Cidade:",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -259,7 +258,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont('Montserrat',
+                  labelStyle: GoogleFonts.getFont("Montserrat",
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -267,8 +266,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Estado:',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Estado:",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -326,7 +325,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           value: value,
                           child: Text(
                             value,
-                            style: GoogleFonts.getFont('Montserrat',
+                            style: GoogleFonts.getFont("Montserrat",
                                 fontSize: 15.0,
                                 letterSpacing: 0.5,
                                 color: Colors.black45),
@@ -341,8 +340,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Data de Nascimento:',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Data de Nascimento:",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -364,11 +363,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 },
 
                 // keyboardType: TextInputType.datetime,
-                // mask: 'xx/xx/xxxx',
+                // mask: "xx/xx/xxxx",
                 // maxLength: 10,
                 // maskedTextFieldController: _nascimentoController,
                 // inputDecoration: InputDecoration(
-                //   counterText: '',
+                //   counterText: "",
                 //   border: OutlineInputBorder(
                 //     borderRadius: BorderRadius.circular(10.0),
                 //   ),
@@ -378,8 +377,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Tipo Sanguíneo:',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Tipo Sanguíneo:",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -418,7 +417,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           value: value,
                           child: Text(
                             value,
-                            style: GoogleFonts.getFont('Montserrat',
+                            style: GoogleFonts.getFont("Montserrat",
                                 fontSize: 15.0,
                                 letterSpacing: 0.5,
                                 color: Colors.black45),
@@ -441,8 +440,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Peso (kg):',
-                              style: GoogleFonts.getFont('Montserrat',
+                              "Peso (kg):",
+                              style: GoogleFonts.getFont("Montserrat",
                                   fontSize: 18.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -451,11 +450,11 @@ class _RegisterPageState extends State<RegisterPage> {
                             maxLength: 3,
                             controller: _pesoController,
                             decoration: InputDecoration(
-                              counterText: '',
+                              counterText: "",
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              labelStyle: GoogleFonts.getFont('Montserrat',
+                              labelStyle: GoogleFonts.getFont("Montserrat",
                                   fontSize: 15.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -472,8 +471,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Altura (cm):',
-                              style: GoogleFonts.getFont('Montserrat',
+                              "Altura (cm):",
+                              style: GoogleFonts.getFont("Montserrat",
                                   fontSize: 18.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -482,11 +481,11 @@ class _RegisterPageState extends State<RegisterPage> {
                             keyboardType: TextInputType.number,
                             controller: _alturaController,
                             decoration: InputDecoration(
-                              counterText: '',
+                              counterText: "",
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              labelStyle: GoogleFonts.getFont('Montserrat',
+                              labelStyle: GoogleFonts.getFont("Montserrat",
                                   fontSize: 15.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -499,8 +498,8 @@ class _RegisterPageState extends State<RegisterPage> {
               Container(
                 padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
                 child: Text(
-                  'Contato de Emergência',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Contato de Emergência",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 22.0,
                       letterSpacing: 0.5,
                       decoration: TextDecoration.underline,
@@ -513,8 +512,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 10.0),
                 child: Text(
-                  'Celular:',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Celular:",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -523,13 +522,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 maxLength: 15,
                 maskedTextFieldController: _emergencyPhoneController,
                 escapeCharacter: 'x',
-                mask: '(xx) xxxxx-xxxx',
+                mask: "(xx) xxxxx-xxxx",
                 inputDecoration: InputDecoration(
-                  counterText: '',
+                  counterText: "",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont('Montserrat',
+                  labelStyle: GoogleFonts.getFont("Montserrat",
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -537,8 +536,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 child: Text(
-                  'Nome Completo:',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Nome Completo:",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -549,7 +548,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont('Montserrat',
+                  labelStyle: GoogleFonts.getFont("Montserrat",
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -562,46 +561,46 @@ class _RegisterPageState extends State<RegisterPage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  onPressed: () async {
+                  onPressed: () {
                     // Texto de finalização de cadastro
                     //Registra o matuto no BD
-                    await firestoreInstance
-                        .collection('users')
+                    firestoreInstance
+                        .collection("users")
                         .doc(_phoneController.text
-                            .replaceAll('(', '')
-                            .replaceAll(')', '')
-                            .replaceAll('-', '')
-                            .replaceAll(' ', ''))
+                            .replaceAll("(", "")
+                            .replaceAll(")", "")
+                            .replaceAll("-", "")
+                            .replaceAll(" ", ""))
                         .set({
-                      'phoneNumber': _phoneController.text
-                          .replaceAll('(', '')
-                          .replaceAll(')', '')
-                          .replaceAll('-', '')
-                          .replaceAll(' ', ''),
-                      'name': _nomeController.text,
-                      'cep': _cepController.text,
-                      'street': _ruaController.text,
-                      'district': _bairroController.text,
+                      "phoneNumber": _phoneController.text
+                          .replaceAll("(", "")
+                          .replaceAll(")", "")
+                          .replaceAll("-", "")
+                          .replaceAll(" ", ""),
+                      "name": _nomeController.text,
+                      "cep": _cepController.text,
+                      "street": _ruaController.text,
+                      "district": _bairroController.text,
                       'number': _numeroController.text,
-                      'additionalAddress': _complementoController.text,
-                      'city': _cidadeController.text,
+                      "additionalAddress": _complementoController.text,
+                      "city": _cidadeController.text,
                       'state': _dropdownEstado,
                       'birthDate': _nascimentoController.text,
                       'bloodType': _dropdownSangue,
                       'weigth': _pesoController.text,
                       'height': _alturaController.text,
                       'sosPhoneNumber': _emergencyPhoneController.text
-                          .replaceAll('(', '')
-                          .replaceAll(')', '')
-                          .replaceAll('-', '')
-                          .replaceAll(' ', ''),
+                          .replaceAll("(", "")
+                          .replaceAll(")", "")
+                          .replaceAll("-", "")
+                          .replaceAll(" ", ""),
                       'sosName': _nomeEmergenciaController.text
                     });
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                RegisterFinish(_phoneController.text)));
+                                CadastroConcluidoPage(_phoneController.text)));
                   },
                   textColor: Colors.white,
                   padding: EdgeInsets.all(0.0),
@@ -615,9 +614,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     child: Text(
-                      'Concluir',
+                      "Concluir",
                       style: GoogleFonts.getFont(
-                        'Montserrat',
+                        "Montserrat",
                         fontSize: 22.0,
                         letterSpacing: 0.5,
                       ),

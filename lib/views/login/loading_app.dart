@@ -8,7 +8,7 @@ class LoadingApp extends StatelessWidget {
         backgroundColor: Color.fromRGBO(127, 181, 190, 1),
         body: Center(
           child: Text(
-            'Elderly',
+            "Elderly",
             style: TextStyle(
               fontFamily: 'Cookie',
               fontSize: 80.0,

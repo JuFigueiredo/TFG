@@ -10,7 +10,7 @@ void main() {
   runApp(App());
 }
 
-/// Classe APP
+/// Main
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

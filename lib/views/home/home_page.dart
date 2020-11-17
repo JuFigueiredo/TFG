@@ -12,7 +12,7 @@ import 'update_page.dart';
 /// Rota para o resultado da SVM no backend
 Future<Post> getSVMData() async {
   var response = await http
-      .get(Uri.encodeFull("http://192.168.25.13:8000/get-svm/18"), headers: {
+      .get(Uri.encodeFull("http://192.168.0.152:8000/get-svm/18"), headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",
   });
@@ -27,10 +27,11 @@ Future<Post> getSVMData() async {
 /// Rota para o resultado da RNA no backend
 Future<Post> getRNAData() async {
   var response = await http
-      .get(Uri.encodeFull("http://192.168.25.13:8000/get-rna/18"), headers: {
+      .get(Uri.encodeFull("http://192.168.0.152:8000/get-rna/18"), headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",
   });
+
   if (response.statusCode == 200) {
     return Post.fromJson(json.decode(response.body));
   } else {
@@ -49,7 +50,7 @@ class Post {
   /// Construtor
   Post({this.personID, this.data});
 
-  ///Convert JSON em MAP
+  ///Converte JSON em MAP
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
       personID: json['personID'],
@@ -61,18 +62,26 @@ class Post {
 /// Instancia Global do usuário
 UserModel user;
 
+// ignore: must_be_immutable
 /// Page home
-class HomePage extends StatelessWidget {
-  /// Isntância para a SVM
+class Home extends StatefulWidget {
+// ignore: must_be_immutable
+
+  /// Construtor
+  Home(UserModel u) {
+    user = u;
+  }
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  /// Instância para a SVM
   final Future<Post> svm = getSVMData();
 
   /// Instância para a RNA
   final Future<Post> rna = getRNAData();
-
-  /// Construtor
-  HomePage(UserModel u) {
-    user = u;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,9 +127,9 @@ class HomePage extends StatelessWidget {
               ],
             ),
             title: Text(
-              'Elderly',
+              "Elderly",
               style: TextStyle(
-                  fontFamily: 'Cookie',
+                  fontFamily: "Cookie",
                   fontSize: 45.0,
                   fontWeight: FontWeight.normal,
                   color: Colors.black,
@@ -132,7 +141,7 @@ class HomePage extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              HomePageTab(svm, rna),
+              HomeTab(svm, rna),
               UpdatePage(),
             ],
           ),

@@ -1,4 +1,5 @@
 /// Classe do usuario a ser cadastrado no banco
+
 class UserModel {
   /// altura
   String height;

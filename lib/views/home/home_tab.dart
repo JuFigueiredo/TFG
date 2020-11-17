@@ -7,34 +7,30 @@ import 'svm_graph.dart';
 
 /// Tab da Tela Principal
 // ignore: must_be_immutable
-class HomePageTab extends StatefulWidget {
+class HomeTab extends StatefulWidget {
   /// SVM
-  Future<Post> svm;
+  Future<Post> localSVM;
 
   /// RNA
-  Future<Post> rna;
+  Future<Post> localRNA;
 
-  /// Construtor
-  HomePageTab(Future<Post> svm, Future<Post> rna) {
-    rna = rna;
-    svm = svm;
-  }
+  ///Construtor
+  HomeTab(this.localSVM, this.localRNA);
   @override
-  _HomePageTabState createState() => _HomePageTabState(svm, rna);
+  _HomeTabState createState() => _HomeTabState(localSVM, localRNA);
 }
 
-class _HomePageTabState extends State<HomePageTab> {
-  Future<Post> svm;
-  Future<Post> rna;
+class _HomeTabState extends State<HomeTab> {
+  Future<Post> localSVM;
+  Future<Post> localRNA;
 
-  _HomePageTabState(Future<Post> svm, Future<Post> rna) {
-    rna = rna;
-    svm = svm;
-  }
+  _HomeTabState(this.localSVM, this.localRNA);
 
   @override
   Widget build(BuildContext context) {
-    var difference = DateTime.now().difference(DateTime.parse(user.birthDate));
+    var difference =
+        (DateTime.now().difference(DateTime.parse(user.birthDate)).inDays ~/
+            365);
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(
@@ -86,7 +82,7 @@ class _HomePageTabState extends State<HomePageTab> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(30.0, 10.0, 20.0, 10.0),
                           child: Text(
-                            '${difference.inDays ~/ 365} anos',
+                            "$difference anos",
                             style: TextStyle(
                               shadows: [
                                 Shadow(color: Colors.black, blurRadius: 0.7)
@@ -114,7 +110,7 @@ class _HomePageTabState extends State<HomePageTab> {
                           child: Icon(FlutterIcons.water_mco),
                         ),
                         Text(
-                          'Tipo sanguíneo : ${user.bloodType}',
+                          "Tipo sanguíneo : ${user.bloodType}",
                           style: TextStyle(
                             shadows: [
                               Shadow(color: Colors.black, blurRadius: 0.7)
@@ -138,7 +134,7 @@ class _HomePageTabState extends State<HomePageTab> {
                           child: Icon(FlutterIcons.weight_mco),
                         ),
                         Text(
-                          'Peso: ${user.weigth}kg',
+                          "Peso: ${user.weigth}kg",
                           style: TextStyle(
                             shadows: [
                               Shadow(color: Colors.black, blurRadius: 0.7)
@@ -154,7 +150,7 @@ class _HomePageTabState extends State<HomePageTab> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 10.0),
                           child: Text(
-                            'Altura: ${user.height} cm',
+                            "Altura: ${user.height} cm",
                             style: TextStyle(
                               shadows: [
                                 Shadow(color: Colors.black, blurRadius: 0.7)
@@ -200,7 +196,7 @@ class _HomePageTabState extends State<HomePageTab> {
                                     padding:
                                         EdgeInsets.fromLTRB(0.0, 0, 3.0, 0),
                                     child: Text(
-                                      '0',
+                                      "0",
                                       style: TextStyle(
                                         shadows: [
                                           Shadow(
@@ -217,7 +213,7 @@ class _HomePageTabState extends State<HomePageTab> {
                                   Container(
                                     padding: EdgeInsets.fromLTRB(3.0, 0, 0, 0),
                                     child: Text(
-                                      'passos',
+                                      "passos",
                                       style: TextStyle(
                                         shadows: [
                                           Shadow(
@@ -257,7 +253,7 @@ class _HomePageTabState extends State<HomePageTab> {
                           Container(
                             padding: EdgeInsets.fromLTRB(20.0, 0, 10.0, 0.0),
                             child: Text(
-                              'Ainda faltam 5000 passos para o objetivo diário',
+                              "Ainda faltam 5000 passos para o objetivo diário",
                               style: TextStyle(
                                 shadows: [
                                   Shadow(color: Colors.black, blurRadius: 0.7)
@@ -318,7 +314,7 @@ class _HomePageTabState extends State<HomePageTab> {
                       width: 20,
                     ),
                     Text(
-                      'Gráfico SVM',
+                      "Gráfico SVM",
                       style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontSize: 25.0,
@@ -331,7 +327,7 @@ class _HomePageTabState extends State<HomePageTab> {
               ),
               onPressed: () => {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => SvmGraph(svm)))
+                    MaterialPageRoute(builder: (context) => SvmGraph(localSVM)))
               },
             ),
           ),
@@ -375,7 +371,7 @@ class _HomePageTabState extends State<HomePageTab> {
                       width: 20,
                     ),
                     Text(
-                      'Gráfico RNA',
+                      "Gráfico RNA",
                       style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontSize: 25.0,
@@ -388,7 +384,7 @@ class _HomePageTabState extends State<HomePageTab> {
               ),
               onPressed: () => {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => RnaGraph(rna)))
+                    MaterialPageRoute(builder: (context) => RnaGraph(localRNA)))
               },
             ),
           ),

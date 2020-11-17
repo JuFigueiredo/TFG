@@ -1,16 +1,17 @@
-import 'dart:ui';
+import "dart:ui";
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
+import "package:flutter/material.dart";
+import "package:flutter/rendering.dart";
+import "package:flutter/widgets.dart";
+import "package:google_fonts/google_fonts.dart";
 import 'package:masked_text/masked_text.dart';
 
 import '../../models/user_model.dart';
 import 'home_page.dart';
 
+// ignore: must_be_immutable
 /// Página para atualizar os dados de usuário
 class UpdatePage extends StatefulWidget {
   @override
@@ -38,6 +39,7 @@ class _UpdatePageState extends State<UpdatePage> {
   @override
   Widget build(BuildContext context) {
     var _dropdownEstado = 'Selecionar';
+    print("Cel: ${user.phoneNumber}");
     return Scaffold(
       resizeToAvoidBottomPadding: true,
       backgroundColor: Color.fromRGBO(250, 250, 250, 0.9),
@@ -50,8 +52,8 @@ class _UpdatePageState extends State<UpdatePage> {
             children: <Widget>[
               Container(
                 child: Text(
-                  'Alterar Dados',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Alterar Dados",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 22.0,
                       letterSpacing: 0.5,
                       decoration: TextDecoration.underline,
@@ -63,23 +65,23 @@ class _UpdatePageState extends State<UpdatePage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 child: Text(
-                  'CEP:',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "CEP:",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
               MaskedTextField(
                 keyboardType: TextInputType.number,
-                mask: 'xxxxx-xxx',
+                mask: "xxxxx-xxx",
                 escapeCharacter: 'x',
                 maskedTextFieldController: _cepController,
                 maxLength: 9,
                 inputDecoration: InputDecoration(
-                  counterText: '',
+                  counterText: "",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont('Montserrat',
+                  labelStyle: GoogleFonts.getFont("Montserrat",
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -87,8 +89,8 @@ class _UpdatePageState extends State<UpdatePage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 child: Text(
-                  'Rua:',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Rua:",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -99,7 +101,7 @@ class _UpdatePageState extends State<UpdatePage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont('Montserrat',
+                  labelStyle: GoogleFonts.getFont("Montserrat",
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -107,8 +109,8 @@ class _UpdatePageState extends State<UpdatePage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 child: Text(
-                  'Bairro:',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Bairro:",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -119,7 +121,7 @@ class _UpdatePageState extends State<UpdatePage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont('Montserrat',
+                  labelStyle: GoogleFonts.getFont("Montserrat",
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -135,8 +137,8 @@ class _UpdatePageState extends State<UpdatePage> {
                             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Número:',
-                              style: GoogleFonts.getFont('Montserrat',
+                              "Número:",
+                              style: GoogleFonts.getFont("Montserrat",
                                   fontSize: 18.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -147,7 +149,7 @@ class _UpdatePageState extends State<UpdatePage> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              labelStyle: GoogleFonts.getFont('Montserrat',
+                              labelStyle: GoogleFonts.getFont("Montserrat",
                                   fontSize: 15.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -164,8 +166,8 @@ class _UpdatePageState extends State<UpdatePage> {
                             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Complemento:',
-                              style: GoogleFonts.getFont('Montserrat',
+                              "Complemento:",
+                              style: GoogleFonts.getFont("Montserrat",
                                   fontSize: 18.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -176,7 +178,7 @@ class _UpdatePageState extends State<UpdatePage> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              labelStyle: GoogleFonts.getFont('Montserrat',
+                              labelStyle: GoogleFonts.getFont("Montserrat",
                                   fontSize: 15.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -190,8 +192,8 @@ class _UpdatePageState extends State<UpdatePage> {
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Cidade:',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Cidade:",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -202,7 +204,7 @@ class _UpdatePageState extends State<UpdatePage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont('Montserrat',
+                  labelStyle: GoogleFonts.getFont("Montserrat",
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -210,8 +212,8 @@ class _UpdatePageState extends State<UpdatePage> {
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Estado:',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Estado:",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -231,9 +233,7 @@ class _UpdatePageState extends State<UpdatePage> {
                       ),
                       value: _dropdownEstado,
                       onChanged: (newValue) {
-                        setState(() {
-                          _dropdownEstado = newValue;
-                        });
+                        _dropdownEstado = newValue;
                       },
                       items: <String>[
                         'Selecionar',
@@ -269,7 +269,7 @@ class _UpdatePageState extends State<UpdatePage> {
                           value: value,
                           child: Text(
                             value,
-                            style: GoogleFonts.getFont('Montserrat',
+                            style: GoogleFonts.getFont("Montserrat",
                                 fontSize: 15.0,
                                 letterSpacing: 0.5,
                                 color: Colors.black45),
@@ -292,8 +292,8 @@ class _UpdatePageState extends State<UpdatePage> {
                             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Peso (kg):',
-                              style: GoogleFonts.getFont('Montserrat',
+                              "Peso (kg):",
+                              style: GoogleFonts.getFont("Montserrat",
                                   fontSize: 18.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -304,7 +304,7 @@ class _UpdatePageState extends State<UpdatePage> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              labelStyle: GoogleFonts.getFont('Montserrat',
+                              labelStyle: GoogleFonts.getFont("Montserrat",
                                   fontSize: 15.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -321,8 +321,8 @@ class _UpdatePageState extends State<UpdatePage> {
                             padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Altura (cm):',
-                              style: GoogleFonts.getFont('Montserrat',
+                              "Altura (cm):",
+                              style: GoogleFonts.getFont("Montserrat",
                                   fontSize: 18.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -333,7 +333,7 @@ class _UpdatePageState extends State<UpdatePage> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              labelStyle: GoogleFonts.getFont('Montserrat',
+                              labelStyle: GoogleFonts.getFont("Montserrat",
                                   fontSize: 15.0, letterSpacing: 0.5),
                             ),
                           ),
@@ -346,8 +346,8 @@ class _UpdatePageState extends State<UpdatePage> {
               Container(
                 padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
                 child: Text(
-                  'Contato de Emergência',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Contato de Emergência",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 22.0,
                       letterSpacing: 0.5,
                       decoration: TextDecoration.underline,
@@ -360,8 +360,8 @@ class _UpdatePageState extends State<UpdatePage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 10.0),
                 child: Text(
-                  'Celular:',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Celular:",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -370,13 +370,13 @@ class _UpdatePageState extends State<UpdatePage> {
                 maxLength: 15,
                 maskedTextFieldController: _emergencyPhoneController,
                 escapeCharacter: 'x',
-                mask: '(xx) xxxxx-xxxx',
+                mask: "(xx) xxxxx-xxxx",
                 inputDecoration: InputDecoration(
-                  counterText: '',
+                  counterText: "",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont('Montserrat',
+                  labelStyle: GoogleFonts.getFont("Montserrat",
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -384,8 +384,8 @@ class _UpdatePageState extends State<UpdatePage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
                 child: Text(
-                  'Nome Completo:',
-                  style: GoogleFonts.getFont('Montserrat',
+                  "Nome Completo:",
+                  style: GoogleFonts.getFont("Montserrat",
                       fontSize: 18.0, letterSpacing: 0.5),
                 ),
               ),
@@ -396,7 +396,7 @@ class _UpdatePageState extends State<UpdatePage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  labelStyle: GoogleFonts.getFont('Montserrat',
+                  labelStyle: GoogleFonts.getFont("Montserrat",
                       fontSize: 15.0, letterSpacing: 0.5),
                 ),
               ),
@@ -411,99 +411,97 @@ class _UpdatePageState extends State<UpdatePage> {
                   ),
                   onPressed: () async {
                     await firestoreInstance
-                        .collection('users')
+                        .collection("users")
                         .doc(user.phoneNumber
-                            .replaceAll('(', '')
-                            .replaceAll(')', '')
-                            .replaceAll('-', '')
-                            .replaceAll(' ', ''))
+                            .replaceAll("(", "")
+                            .replaceAll(")", "")
+                            .replaceAll("-", "")
+                            .replaceAll(" ", ""))
                         .update({
-                      'cep': _cepController.text == null ||
-                              _cepController.text == ''
+                      "cep": _cepController.text == null ||
+                              _cepController.text == ""
                           ? user.postalCode
                           : _cepController.text,
-                      'street': _ruaController.text == null ||
-                              _ruaController.text == ''
+                      "street": _ruaController.text == null ||
+                              _ruaController.text == ""
                           ? user.street
                           : _ruaController.text,
-                      'district': _bairroController.text == null ||
-                              _bairroController.text == ''
+                      "district": _bairroController.text == null ||
+                              _bairroController.text == ""
                           ? user.district
                           : _bairroController.text,
                       'number': _numeroController.text == null ||
-                              _numeroController.text == ''
+                              _numeroController.text == ""
                           ? user.number
                           : _numeroController.text,
-                      'additionalAddress':
+                      "additionalAddress":
                           _complementoController.text == null ||
-                                  _complementoController.text == ''
+                                  _complementoController.text == ""
                               ? user.additionalAddress
                               : _complementoController.text,
-                      'city': _cidadeController.text == null ||
-                              _cidadeController.text == ''
+                      "city": _cidadeController.text == null ||
+                              _cidadeController.text == ""
                           ? user.city
                           : _cidadeController.text,
-                      'state': _dropdownEstado == 'Selecionar'
-                          ? user.state
-                          : _dropdownEstado,
+                      'state': _dropdownEstado,
                       'weigth': _pesoController.text == null ||
-                              _pesoController.text == ''
+                              _pesoController.text == ""
                           ? user.weigth
                           : _pesoController.text,
                       'height': _alturaController.text == null ||
-                              _alturaController.text == ''
+                              _alturaController.text == ""
                           ? user.height
                           : _alturaController.text,
                       'sosPhoneNumber': _emergencyPhoneController.text
-                                      .replaceAll('(', '')
-                                      .replaceAll(')', '')
-                                      .replaceAll('-', '')
-                                      .replaceAll(' ', '') ==
+                                      .replaceAll("(", "")
+                                      .replaceAll(")", "")
+                                      .replaceAll("-", "")
+                                      .replaceAll(" ", "") ==
                                   null ||
                               _emergencyPhoneController.text
-                                      .replaceAll('(', '')
-                                      .replaceAll(')', '')
-                                      .replaceAll('-', '')
-                                      .replaceAll(' ', '') ==
-                                  ''
+                                      .replaceAll("(", "")
+                                      .replaceAll(")", "")
+                                      .replaceAll("-", "")
+                                      .replaceAll(" ", "") ==
+                                  ""
                           ? user.sosPhoneNumber
                           : _emergencyPhoneController.text
-                              .replaceAll('(', '')
-                              .replaceAll(')', '')
-                              .replaceAll('-', '')
-                              .replaceAll(' ', ''),
+                              .replaceAll("(", "")
+                              .replaceAll(")", "")
+                              .replaceAll("-", "")
+                              .replaceAll(" ", ""),
                       'sosName': _nomeEmergenciaController.text == null ||
-                              _nomeEmergenciaController.text == ''
+                              _nomeEmergenciaController.text == ""
                           ? user.sosName
                           : _nomeEmergenciaController.text,
                     });
 
                     await firestoreInstance
-                        .collection('users')
-                        .where('phoneNumber',
+                        .collection("users")
+                        .where("phoneNumber",
                             isEqualTo: user.phoneNumber
-                                .replaceAll('(', '')
-                                .replaceAll(')', '')
-                                .replaceAll('-', '')
-                                .replaceAll(' ', ''))
+                                .replaceAll("(", "")
+                                .replaceAll(")", "")
+                                .replaceAll("-", "")
+                                .replaceAll(" ", ""))
                         .get()
                         .then((querySnapshot) {
                       user = UserModel(
-                          querySnapshot.docs.first.data()['height'],
-                          querySnapshot.docs.first.data()['district'],
-                          querySnapshot.docs.first.data()['cep'],
-                          querySnapshot.docs.first.data()['phoneNumber'],
-                          querySnapshot.docs.first.data()['sosPhoneNumber'],
-                          querySnapshot.docs.first.data()['city'],
-                          querySnapshot.docs.first.data()['additionalAddress'],
-                          querySnapshot.docs.first.data()['birthDate'],
-                          querySnapshot.docs.first.data()['state'],
-                          querySnapshot.docs.first.data()['name'],
-                          querySnapshot.docs.first.data()['sosName'],
-                          querySnapshot.docs.first.data()['number'],
-                          querySnapshot.docs.first.data()['weigth'],
-                          querySnapshot.docs.first.data()['street'],
-                          querySnapshot.docs.first.data()['bloodType']);
+                          querySnapshot.docs.first.data()["height"],
+                          querySnapshot.docs.first.data()["district"],
+                          querySnapshot.docs.first.data()["postalCode"],
+                          querySnapshot.docs.first.data()["phoneNumber"],
+                          querySnapshot.docs.first.data()["sosPhoneNumber"],
+                          querySnapshot.docs.first.data()["city"],
+                          querySnapshot.docs.first.data()["additionalAddress"],
+                          querySnapshot.docs.first.data()["birthDate"],
+                          querySnapshot.docs.first.data()["state"],
+                          querySnapshot.docs.first.data()["name"],
+                          querySnapshot.docs.first.data()["sosName"],
+                          querySnapshot.docs.first.data()["number"],
+                          querySnapshot.docs.first.data()["weigth"],
+                          querySnapshot.docs.first.data()["street"],
+                          querySnapshot.docs.first.data()["bloodType"]);
                     }).catchError(print);
 
                     // ignore: deprecated_member_use
@@ -519,7 +517,7 @@ class _UpdatePageState extends State<UpdatePage> {
                             SizedBox(width: 20),
                             Expanded(
                               child: Text(
-                                'Alteração realizada com sucesso!',
+                                "Alteração realizada com sucesso!",
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontSize: 18.0,
@@ -545,9 +543,9 @@ class _UpdatePageState extends State<UpdatePage> {
                       ),
                     ),
                     child: Text(
-                      'Concluir',
+                      "Concluir",
                       style: GoogleFonts.getFont(
-                        'Montserrat',
+                        "Montserrat",
                         fontSize: 22.0,
                         letterSpacing: 0.5,
                       ),

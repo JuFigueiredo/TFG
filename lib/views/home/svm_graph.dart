@@ -1,32 +1,28 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
 import '../../models/graph_model.dart';
 import '../../screen_orientation.dart';
+
 import 'home_page.dart';
 
 /// Cria Gráfico SVM
 // ignore: must_be_immutable
 class SvmGraph extends StatefulWidget {
   /// Dados SVM
-  Future<Post> svm;
+  Future<Post> localSVM;
 
   /// Construtor
-  SvmGraph(Future<Post> svm) : super() {
-    svm = svm;
-  }
+  SvmGraph(this.localSVM) : super();
   @override
-  _SvmGraphState createState() => _SvmGraphState(svm);
+  _SvmGraphState createState() => _SvmGraphState(localSVM);
 }
 
 class _SvmGraphState extends State<SvmGraph>
     with PortraitStatefulModeMixin<SvmGraph> {
-  Future<Post> svm;
+  Future<Post> localSVM;
 
-  _SvmGraphState(Future<Post> svm) {
-    svm = svm;
-  }
+  _SvmGraphState(this.localSVM);
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +33,9 @@ class _SvmGraphState extends State<SvmGraph>
         title: Padding(
           padding: EdgeInsets.all(10.0),
           child: Text(
-            'Elderly',
+            "Elderly",
             style: TextStyle(
-                fontFamily: 'Cookie',
+                fontFamily: "Cookie",
                 fontSize: 45.0,
                 fontWeight: FontWeight.normal,
                 color: Colors.black,
@@ -61,8 +57,8 @@ class _SvmGraphState extends State<SvmGraph>
               Padding(
                 padding: EdgeInsets.only(top: 30.0, bottom: 10.0),
                 child: Text(
-                  'Previsão dos movimentos a partir'
-                  'de uma Máquina de Vetor de Suporte (SVM)',
+                  "Previsão dos movimentos a partir de"
+                  "uma Máquina de Vetor de Suporte (SVM)",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     shadows: [Shadow(color: Colors.black, blurRadius: 0.7)],
@@ -74,7 +70,7 @@ class _SvmGraphState extends State<SvmGraph>
                 ),
               ),
               FutureBuilder<Post>(
-                future: svm,
+                future: localSVM,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     var svm = SimpleLineChart.withData(snapshot.data.data);
@@ -99,7 +95,7 @@ class _SvmGraphState extends State<SvmGraph>
                         padding: EdgeInsets.all(10.0),
                         alignment: Alignment.center,
                         child: Text(
-                          '${snapshot.error}',
+                          "${snapshot.error}",
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 30.0),
                         ),

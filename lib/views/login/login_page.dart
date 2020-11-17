@@ -11,7 +11,7 @@ import '../../models/user_model.dart';
 import '../home/home_page.dart';
 import '../register/register_page.dart';
 
-/// Página de Login
+/// Pagina de Login
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -20,8 +20,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   UserController uc = UserController();
   final TextEditingController _phoneController = TextEditingController();
-  // ignore: deprecated_member_use
-  final firestoreInstance = Firestore.instance;
+
+  final firestoreInstance = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +39,14 @@ class _LoginPageState extends State<LoginPage> {
               decoration: BoxDecoration(
                   image: DecorationImage(
                 image: AssetImage(
-                  'assets/images/wallpaperOld.jpeg',
+                  "assets/images/wallpaperOld.jpeg",
                 ),
                 fit: BoxFit.cover,
               )),
             ),
             Opacity(
               child: Image.asset(
-                'assets/images/bgwhite.jpg',
+                "assets/images/bgwhite.jpg",
                 fit: BoxFit.cover,
                 // width: size.width,
                 //height: size.height,
@@ -115,52 +115,52 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () async {
                               // Checar numero no banco de dados
                               await firestoreInstance
-                                  .collection('users')
-                                  .where('phoneNumber',
+                                  .collection("users")
+                                  .where("phoneNumber",
                                       isEqualTo: _phoneController.text
-                                          .replaceAll('(', '')
-                                          .replaceAll(')', '')
-                                          .replaceAll('-', '')
-                                          .replaceAll(' ', ''))
+                                          .replaceAll("(", "")
+                                          .replaceAll(")", "")
+                                          .replaceAll("-", "")
+                                          .replaceAll(" ", ""))
                                   .get()
                                   .then((querySnapshot) {
                                 if (querySnapshot.size > 0) {
                                   var arguments = UserModel(
-                                      querySnapshot.docs.first.data()['height'],
+                                      querySnapshot.docs.first.data()["height"],
                                       querySnapshot.docs.first
-                                          .data()['district'],
-                                      querySnapshot.docs.first.data()['cep'],
+                                          .data()["district"],
                                       querySnapshot.docs.first
-                                          .data()['phoneNumber'],
+                                          .data()["postalCode"],
                                       querySnapshot.docs.first
-                                          .data()['sosPhoneNumber'],
-                                      querySnapshot.docs.first.data()['city'],
+                                          .data()["phoneNumber"],
                                       querySnapshot.docs.first
-                                          .data()['additionalAddress'],
+                                          .data()["sosPhoneNumber"],
+                                      querySnapshot.docs.first.data()["city"],
                                       querySnapshot.docs.first
-                                          .data()['birthDate'],
-                                      querySnapshot.docs.first.data()['state'],
-                                      querySnapshot.docs.first.data()['name'],
+                                          .data()["additionalAddress"],
                                       querySnapshot.docs.first
-                                          .data()['sosName'],
-                                      querySnapshot.docs.first.data()['number'],
-                                      querySnapshot.docs.first.data()['weigth'],
-                                      querySnapshot.docs.first.data()['street'],
+                                          .data()["birthDate"],
+                                      querySnapshot.docs.first.data()["state"],
+                                      querySnapshot.docs.first.data()["name"],
                                       querySnapshot.docs.first
-                                          .data()['bloodType']);
+                                          .data()["sosName"],
+                                      querySnapshot.docs.first.data()["number"],
+                                      querySnapshot.docs.first.data()["weigth"],
+                                      querySnapshot.docs.first.data()["street"],
+                                      querySnapshot.docs.first
+                                          .data()["bloodType"]);
                                   uc.setUser(arguments);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            HomePage(uc.user)),
+                                        builder: (context) => Home(uc.user)),
                                   );
                                 } else {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              RegisterPage()));
+                                              CadastroPage()));
                                 }
                               }).catchError(print);
                             },
@@ -207,12 +207,12 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () {
                               //Código de se cadastrar
                               // Direcionar para a página de cadastro
-                              _phoneController.text = '';
+                              _phoneController.text = "";
 
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => RegisterPage()),
+                                    builder: (context) => CadastroPage()),
                               );
                             },
                             textColor: Colors.black,

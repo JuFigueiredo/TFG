@@ -1,7 +1,7 @@
-/// Example of a  line chart.
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 /// Grafico de Linhas
 class SimpleLineChart extends StatelessWidget {
   /// Lista de Graficos
@@ -80,19 +80,19 @@ class SimpleLineChart extends StatelessWidget {
     });
 
     // Dado test = new Dado(2, 6);
-    // print('Posicao {${test.posicao}}');
-    // print('Tempo {${test.tempo}}');
+    // print("Posicao {${test.posicao}}");
+    // print("Tempo {${test.tempo}}");
 
     return [
       charts.Series<Dado, double>(
-        id: 'Posição em relação ao tempo',
+        id: "Posição em relação ao tempo",
         colorFn: (data, __) => charts.MaterialPalette.blue.shadeDefault,
         domainFn: (data, _) => data.tempo,
         measureFn: (data, _) => data.posicao,
         data: array,
       ),
       charts.Series<Dado, double>(
-        id: 'Ocorrência de queda',
+        id: "Ocorrência de queda",
         colorFn: (data, __) => charts.MaterialPalette.red.shadeDefault.darker,
         domainFn: (data, _) => data.tempo,
         measureFn: (data, _) => data.posicao - 6,
