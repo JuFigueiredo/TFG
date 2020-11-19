@@ -15,23 +15,19 @@ import '../home/home_page.dart';
 /// ignore: must_be_immutable
 class CadastroConcluidoPage extends StatefulWidget {
   /// ID do banco
-  String phone;
+  String localPhone;
 
   /// Construtor
-  CadastroConcluidoPage(String phone) {
-    phone = phone;
-  }
+  CadastroConcluidoPage(this.localPhone);
   @override
   _CadastroConcluidoPageState createState() =>
-      _CadastroConcluidoPageState(phone);
+      _CadastroConcluidoPageState(localPhone);
 }
 
 class _CadastroConcluidoPageState extends State<CadastroConcluidoPage> {
-  String phone;
+  String localPhone;
   UserController uc = UserController();
-  _CadastroConcluidoPageState(String phone) {
-    phone = phone;
-  }
+  _CadastroConcluidoPageState(this.localPhone);
 
   final firestoreInstance = FirebaseFirestore.instance;
 
@@ -105,7 +101,7 @@ class _CadastroConcluidoPageState extends State<CadastroConcluidoPage> {
                   await firestoreInstance
                       .collection("users")
                       .where("phoneNumber",
-                          isEqualTo: phone
+                          isEqualTo: localPhone
                               .replaceAll("(", "")
                               .replaceAll(")", "")
                               .replaceAll("-", "")

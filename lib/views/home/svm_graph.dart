@@ -58,7 +58,7 @@ class _SvmGraphState extends State<SvmGraph>
                 padding: EdgeInsets.only(top: 30.0, bottom: 10.0),
                 child: Text(
                   "Previsão dos movimentos a partir de"
-                  "uma Máquina de Vetor de Suporte (SVM)",
+                  " uma Máquina de Vetor de Suporte (SVM)",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     shadows: [Shadow(color: Colors.black, blurRadius: 0.7)],

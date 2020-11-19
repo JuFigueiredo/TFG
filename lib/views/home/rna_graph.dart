@@ -58,7 +58,7 @@ class _RnaGraphState extends State<RnaGraph>
                 padding: EdgeInsets.only(top: 30.0, bottom: 10.0),
                 child: Text(
                   "Previsão dos movimentos a partir"
-                  "de uma Rede Neural Artificial (RNA)",
+                  " de uma Rede Neural Artificial (RNA)",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     shadows: [Shadow(color: Colors.black, blurRadius: 0.7)],
